@@ -1,0 +1,281 @@
+page-login {
+
+}
+*
+{
+
+margin-top: 0px;
+     font-family: 'Poppins', sans-serif;
+}
+
+body {
+padding:0;
+margin:0;
+    font-family: 'Poppins', sans-serif;
+}
+
+.bg {
+    background-image: url(img/background.png);
+    max-width: 760px;
+    height: 1350px;
+    width: 100%;
+    margin: auto;
+}
+
+.bg-white {
+    background-color: #e1e1e1;
+    max-width: 760px;
+    height: 1350px;
+    width: 100%;
+    margin: auto;
+    border: 10px;
+}
+
+
+.container {
+    width: 100%;
+    height: 100%;
+    display: table;
+     border: 1p solid red;
+}
+
+.container-new {
+    padding-top: 0;
+    width: 100%;
+    height: 175px;
+    background: #2d568e;
+}
+
+.container-new img {
+    float: left;
+    margin: 34px;
+}
+
+.container-new h1 {
+    font-size: 90px;
+    text-align: center;
+    color: #fbec3b;
+    /* vertical-align: middle; */
+    padding-top: 20px;
+    padding-right: -167px;
+}
+
+.container-2 {
+    width: 100%;
+   
+    background: #dbdbdb;
+}
+
+.main {
+    display: table-cell;
+   
+    vertical-align: middle;
+}
+
+img {
+    padding: 0px;
+}
+
+.logo {
+    width: 260px;
+    height: 294px;
+    margin: 0px auto 100px auto;
+}
+
+.logo_landing {
+   width: 408px;
+    height: 110px;
+    color: #ffffff;
+    font-family: Poppins;
+    font-size: 149px;
+    font-weight: 700;
+    line-height: 46.32px;
+    text-transform: uppercase;
+    margin: auto;
+    margin-top: -100px
+}
+
+
+
+.logo_landing img {
+    width: 409px;
+    height: 463px;
+    margin: -200px auto 0 auto;
+}
+
+.opacity {
+    width: 500px;
+    height: 500px;
+    border-radius: 10px;
+    background-color: transparent;
+    /* opacity: 0.61; */
+    margin: auto;
+    padding: 50px;
+}
+
+.login input {
+    max-width: 608px;
+    height: 86px;
+    margin: 15px 45px;
+    font-size: 35px;
+    padding: none;
+    padding-left: 70px;
+    width: 100%;
+    border: none;
+    color: white;
+    background-color: #ffffff69;
+}
+
+.login2 {
+    margin: 200px 0 0 0;
+    text-align: center;
+
+}
+
+.login2 p {
+    font-size: 30px;
+    color:white;
+}
+
+.login2 a {
+    width: 100%;
+    margin: 55px auto 0 auto;
+    max-width: 608px;
+    text-align: center;
+    /* padding: 17px; */
+    background: #113265;
+    color: #ffeb3b;
+    border-radius: 5px;
+    text-decoration: uppercase;
+    text-transform: uppercase;
+    font-size: 48px;
+    text-decoration: none;
+    display: block;
+}
+
+::-webkit-input-placeholder {
+  color: white;
+  
+}
+::-moz-placeholder {
+  color: white;
+}
+:-ms-input-placeholder {
+  color: white;
+}
+::placeholder {
+  color: white;
+}
+
+input[type="text"] {
+    background-image: url(img/user.png);
+    background-repeat: no-repeat;
+    background-position: 10px 10px;
+}
+
+input[type="email"] {
+    background-image: url(img/email.png);
+    background-repeat: no-repeat;
+    background-position: 10px 16px;
+}
+
+input[type="password"] {
+    background-image: url(img/pass.png);
+    background-repeat: no-repeat;
+    background-position: 10px 12px;
+}
+
+input[type="submit"] {
+    width: 100%;
+    margin: 75px 75px 75px 45px;
+    max-width: 678px;
+    text-align: center;
+    padding: 0px;
+    background: #113265;
+    color: #ffeb3b;
+    border-radius: 5px;
+   
+    text-transform: uppercase;
+    font-size: 48px;
+    text-align: center;
+}
+
+form a {
+    display: inline-block;
+    font-size: 25px;
+    margin: 0px 47px 0px 47px;
+    color: white;
+    text-decoration: none;
+}
+
+a.float {
+    float: right;
+}
+
+
+/*for tab*/
+
+/* Style the tab */
+.tab {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 30px 52px;
+    transition: 0.3s;
+    font-size: 32px;
+}
+/* Change background color of buttons on hover */
+.tab button:hover {
+    background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+    
+    border-bottom: 1px solid #070707;
+}
+
+/* Style the tab content */
+.tabcontent {
+    display: none;
+    padding: 10px 15px 0px 0px;
+    /* border: 1px solid #ccc; */
+    /* border-top: none; */
+    font-size: 22px;
+    text-align: left;
+}
+
+.tabcontent h3 {
+    border-bottom: 1px solid #2d568e;
+    width: 160px;
+    padding: 15px;
+}
+.tabcontent tr{
+    
+    border-bottom: 1px solid red;
+
+}
+
+.tabcontent table tr td {
+    /* margin: -57px; */
+    float: left;
+    margin: 30px 0px 0px 0px;
+    padding: 0px 0px 20px 69px;
+    font-size: 25px;
+    text-align: left;
+    border-bottom: 3px solid #c8c7c7;
+    /* width: 10px; */
+}
+
+.tabcontent table tr td:first-child {
+    color: #2d568e;
+}
