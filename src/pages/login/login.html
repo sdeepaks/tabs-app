@@ -13,25 +13,42 @@
 </ion-header>
 
 
-<ion-content padding>
 
-<ion-content>
-  <ion-list class="login-form" inset padding>
-        <ion-item>
-            <ion-input type="email" placeholder="Email Input"></ion-input>
-        </ion-item>
-        <hr/>
-        <ion-item>
-             <ion-input type="password" placeholder="Password Input"></ion-input>
-            <button ion-button clear color="blue" item-right>Forgot</button>
-        </ion-item>
+<ion-content padding text-center>
+
+  <img src="assets/imgs/logo.png" width="150" />
+
+  <ion-list class="login-form">
+
+     <ion-item>
+    <ion-label floating>Username</ion-label>
+    <ion-input type="text"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label floating>Password</ion-label>
+    <ion-input type="password"></ion-input>
+    <button ion-button clear color="blue" item-right>Forgot?</button>
+  </ion-item>
+       
          <hr/>
-<ion-item>
-<button ion-button color="blue" (click)="nav_register()">Register</button>
-<button ion-button  color="blue" (click)="authenticate()">Login</button>
-</ion-item>
+
+
+
+  <button ion-button full  color="blue" (click)="authenticate()">Login</button>
+ 
+
+<br>
+
+  <button ion-button outline item-end icon-start (click)="nav_register()">
+      <ion-icon name="register"></ion-icon>
+     Create An Account
+    </button>
+
+
+
    </ion-list>
-</ion-content>
+
 
 
 
