@@ -1,0 +1,40 @@
+<!--
+  Generated template for the ValidatePinPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>validatePIN</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+<form   [formGroup]="validatePINForm" >
+
+		<ion-item>
+
+			<ion-label>PIN</ion-label>
+
+			<ion-input type="password"  [formControl]="validatePINForm.controls['PIN']"></ion-input>
+				
+		
+
+		</ion-item>
+<ion-row>
+			<ion-col text-center>
+				<button ion-button block color="secondary"
+				
+				(click)="validatePIN()">
+				Validate
+			</button>
+		</ion-col>
+</ion-row>
+
+</form>
+</ion-content>

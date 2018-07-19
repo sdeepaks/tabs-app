@@ -9,6 +9,8 @@ import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { MainPage } from '../pages/main/main';
 import { RegisterPage } from '../pages/register/register';
+import { CreatePinPage } from '../pages/create-pin/create-pin';
+import { ValidatePinPage } from '../pages/validate-pin/validate-pin';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,9 @@ import { RegisterPage } from '../pages/register/register';
     HomePage,
     LoginPage,
     MainPage,
-    RegisterPage
+    RegisterPage,
+    CreatePinPage,
+    ValidatePinPage
   ],
   imports: [
     BrowserModule,
@@ -28,7 +32,9 @@ import { RegisterPage } from '../pages/register/register';
     HomePage,
     LoginPage,
     MainPage,
-    RegisterPage
+    RegisterPage,
+    CreatePinPage,
+    ValidatePinPage
   ],
   providers: [
     StatusBar,

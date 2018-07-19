@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { MainPage } from '../main/main';
+import { ValidatePinPage } from '../validate-pin/validate-pin';
 import { RegisterPage } from '../register/register';
 
 
@@ -29,9 +29,10 @@ export class LoginPage {
   authenticate()
   {
 
-  this.navCtrl.push(MainPage);
+  this.navCtrl.push(ValidatePinPage);
   }
-register()
+  
+nav_register()
 {
  this.navCtrl.push(RegisterPage); 
 }
