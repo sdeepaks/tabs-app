@@ -11,6 +11,8 @@ import { MainPage } from '../pages/main/main';
 import { RegisterPage } from '../pages/register/register';
 import { CreatePinPage } from '../pages/create-pin/create-pin';
 import { ValidatePinPage } from '../pages/validate-pin/validate-pin';
+import { AuthServiceProvider } from '../providers/auth-service/auth-service';
+import { HttpModule } from '@angular/http';
 
 @NgModule({
   declarations: [
@@ -24,6 +26,7 @@ import { ValidatePinPage } from '../pages/validate-pin/validate-pin';
   ],
   imports: [
     BrowserModule,
+    HttpModule,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
@@ -39,7 +42,8 @@ import { ValidatePinPage } from '../pages/validate-pin/validate-pin';
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    AuthServiceProvider
   ]
 })
 export class AppModule {}
