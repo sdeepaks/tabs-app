@@ -14,5 +14,35 @@
 
 
 <ion-content padding>
+<ion-row padding-bottom>
+<ion-item>
+  <ion-label>Select Type</ion-label>
+  <ion-select [(ngModel)]="expense">
+    <ion-option value="housenote">Housenote</ion-option>
+    <ion-option value="insurance">Insurance</ion-option>
+    <ion-option value="insurance">Food</ion-option>
+  </ion-select>
+</ion-item></ion-row>
+<ion-row padding-bottom>
+<ion-item>
+  <ion-label>Date</ion-label>
+  <ion-datetime displayFormat="DD/MM/YYYY" pickerFormat="DD MMMM YYYY" [(ngModel)]="myDate"></ion-datetime><ion-icon ios="ios-calendar" md="md-calendar" item-left></ion-icon>
+</ion-item>
+</ion-row>
+<ion-row padding-bottom>
+<ion-item>
+  <ion-input type="text" placeholder="Expense
+  "></ion-input><ion-icon ios="logo-usd" md="logo-usd" item-left></ion-icon>
+</ion-item></ion-row>
+
+
+
+<ion-row>
+			<ion-col text-center>
+				<button ion-button  color="secondary">Add Expense
+			</button>
+		</ion-col>
+</ion-row>
+
 
 </ion-content>
