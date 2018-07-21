@@ -19,17 +19,17 @@
 	export class RegisterPage {
 
 		createSuccess = false;
-  		userRegistrationForm = { name: '', email: '', password: '', confPassword: '' };
+		userRegistrationForm = { firstName: '',lastName: '', emailId: '', password: '', confPassword: '' };
+		storeData=null;
 
-
-	
+		
 
 		constructor(public navCtrl: NavController, 
-					public navParams: NavParams , 
-					private formBuilder: FormBuilder,
-    				private auth: AuthServiceProvider,
-    				private alertCtrl: AlertController
-					) 
+			public navParams: NavParams , 
+			private formBuilder: FormBuilder,
+			private auth: AuthServiceProvider,
+			private alertCtrl: AlertController
+			) 
 		{
 
 			/*this.userRegistrationForm = this.formBuilder.group({
@@ -49,60 +49,67 @@
 		onSignUp()
 		{
 			console.log(this.userRegistrationForm);
-		
- if (this.userRegistrationForm.password != this.userRegistrationForm.confPassword) {
-     
-      this.showPopup("Error", 'The password confirmation does not match.');
-    } else {
+			
+			if (this.userRegistrationForm.password != this.userRegistrationForm.confPassword) {
+				
+				this.showPopup("Error", 'The password confirmation does not match.');
+			} else {
 
 
-    this.auth.register(this.userRegistrationForm).subscribe(data => {
+				this.auth.register(this.userRegistrationForm).subscribe(data => {
 
-console.log("data.status:"+data);
+					console.log("data.status:"+data.status);
 
-if (data.status === "success")
-{
-	this.showPopup("Success", "Account created successfully!");
+					if (data.status === "success")
+					{
+						
 
-	this.navCtrl.push(CreatePinPage);
+						this.storeData = {key:'email',value: this.userRegistrationForm.emailId};
+						
+						this.auth.storeLocally(this.storeData);
 
-}else if(data.status === "error"){
-	this.showPopup("Error", "Email already Registered!");
-
-}
-else{
-	this.showPopup("Error", "No internet detected!");
-
-}
-
-    });
-        
+						this.showPopup("Success", "Account created successfully!");
 
 
+						this.navCtrl.push(CreatePinPage,{emailId: this.userRegistrationForm.emailId});
 
-    }
+					}else if(data.status === "error"){
+						this.showPopup("Error", "Email already Registered!");
+
+					}
+					else{
+						this.showPopup("Error", "No internet detected!"); 
+
+					}
+
+				});
+				
+
+
+
+			}
 
 
 			
 		}
 
 		showPopup(title, text) {
-    let alert = this.alertCtrl.create({
-      title: title,
-      subTitle: text,
-      buttons: [
-        {
-          text: 'OK',
-          handler: data => {
-            if (this.createSuccess) {
-             
-            }
-          }
-        }
-      ]
-    });
-    alert.present();
-  }
+			let alert = this.alertCtrl.create({
+				title: title,
+				subTitle: text,
+				buttons: [
+				{
+					text: 'OK',
+					handler: data => {
+						if (this.createSuccess) {
+							
+						}
+					}
+				}
+				]
+			});
+			alert.present();
+		}
 
 
 	}
