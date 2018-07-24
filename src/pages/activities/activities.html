@@ -16,17 +16,18 @@
 	<ion-content padding>
 		
 	<ion-list>
+     <ion-item-sliding *ngFor="let expense of expenses; let i=index">
 	  <ion-item>
 	 <ion-grid>
 <ion-row justify-content-around>
     <ion-col col-2>
-      <ion-icon name="home" ></ion-icon> House 
+      <ion-icon name="home" ></ion-icon> {{expense.category}} 
     </ion-col>
     <ion-col col-2 offset-1>
-      <ion-icon name="calendar" ></ion-icon> 2014-03-11
+      <ion-icon name="calendar" ></ion-icon>  {{expense.date}} 
     </ion-col>
     <ion-col col-2 offset-2>
-     <ion-icon name="cash" ></ion-icon>  123$
+     <ion-icon name="cash" ></ion-icon>  ${{expense.amount}}
     </ion-col>
     <ion-col col-2 offset-1>
      <ion-icon name="create"></ion-icon> <a>edit</a>
@@ -34,25 +35,7 @@
 </ion-row>
 </ion-grid>
 	  </ion-item>
-
-	  	  <ion-item>
-	 
-<ion-row justify-content-around>
-    <ion-col col-2>
-      <ion-icon name="restaurant" ></ion-icon> Food
-    </ion-col>
-    <ion-col col-2 offset-1>
-      <ion-icon name="calendar" ></ion-icon>  2014-03-11
-    </ion-col>
-    <ion-col col-2 offset-2>
-     <ion-icon name="cash" ></ion-icon>  43$
-    </ion-col>
-    <ion-col col-2 offset-1>
-      <ion-icon name="create"></ion-icon> <a>edit</a>
-    </ion-col>
-</ion-row>
-		
-	  </ion-item>
+ </ion-item-sliding>
 	</ion-list>
 
 	</ion-content>

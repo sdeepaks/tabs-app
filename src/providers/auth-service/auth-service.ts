@@ -1,5 +1,5 @@
 	import { Injectable } from '@angular/core';
-	import { Http,Headers, RequestOptions ,Response} from '@angular/http';
+	import { Http,Headers, RequestOptions ,Response } from '@angular/http';
 	import {Observable} from 'rxjs/Observable';
 	import 'rxjs/add/operator/do';
 	import 'rxjs/add/operator/catch';
@@ -97,6 +97,26 @@
 
 
 	return this.http.post(AuthServiceProvider.GENERATE_PIN_URL, body)
+	.do( (res:Response) => console.log(res))
+	.map( (res:Response) => res.json())
+	.catch(error => {
+
+		console.log("exception handler");
+		return JSON.parse('[{"status":"systemError"}]');
+	});
+
+
+
+}
+
+
+
+public  doLogin(loginForm)  { 
+
+  var login_url = "http://semicolonites.website/tabs/api/user_authenticate?uname="+loginForm.email+"&password=" +loginForm.password;
+
+
+	return this.http.get(login_url)
 	.do( (res:Response) => console.log(res))
 	.map( (res:Response) => res.json())
 	.catch(error => {

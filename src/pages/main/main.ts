@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController } from 'ionic-angular';
 
+
+
 /**
  * Generated class for the MainPage tabs.
  *
@@ -21,5 +23,7 @@ export class MainPage {
 
 
   constructor(public navCtrl: NavController) {}
+
+
 
 }

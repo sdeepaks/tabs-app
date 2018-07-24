@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,AlertController,LoadingController } from 'ionic-angular';
 import { ValidatePinPage } from '../validate-pin/validate-pin';
 import { RegisterPage } from '../register/register';
+import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 
 
 
@@ -12,28 +13,87 @@ import { RegisterPage } from '../register/register';
  * Ionic pages and navigation.
  */
 
-@IonicPage()
-@Component({
-  selector: 'page-login',
-  templateUrl: 'login.html',
-})
-export class LoginPage {
+ @IonicPage()
+ @Component({
+   selector: 'page-login',
+   templateUrl: 'login.html',
+ })
+ export class LoginPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
+   loginForm = { email: '', password: ''};
+   createSuccess=true;
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad LoginPage');
-  }
 
-  authenticate()
-  {
+   constructor(public navCtrl: NavController, public navParams: NavParams,
+     private auth: AuthServiceProvider,
+     private alertCtrl: AlertController,
+     public loadingController: LoadingController
+     ) {
+   }
 
-  this.navCtrl.push(ValidatePinPage);
-  }
-  
-nav_register()
-{
- this.navCtrl.push(RegisterPage); 
-}
-}
+   ionViewDidLoad() {
+     console.log('ionViewDidLoad LoginPage');
+   }
+
+   authenticate()
+   {
+     console.log(this.loginForm);    
+     console.log("Login EMAIL-->" + this.loginForm.email);
+
+
+     this.auth.doLogin(this.loginForm).subscribe(data => {
+
+       
+       let loader = this.loadingController.create({
+         content: "Authenticating..."
+       });  
+       loader.present();
+
+       
+       if (data.status === "success")
+       {
+         loader.dismiss();
+         this.navCtrl.push(ValidatePinPage);
+
+       }else if(data.status === "error"){
+         this.showPopup("Error", data.message);
+
+       }
+       else{
+         this.showPopup("Error", "No internet detected!"); 
+
+       }
+
+     });
+
+
+
+
+
+
+     
+   }
+   
+   nav_register()
+   {
+     this.navCtrl.push(RegisterPage); 
+   }
+
+   showPopup(title, text) {
+     let alert = this.alertCtrl.create({
+       title: title,
+       subTitle: text,
+       buttons: [
+       {
+         text: 'OK',
+         handler: data => {
+           if (this.createSuccess) {
+
+           }
+         }
+       }
+       ]
+     });
+     alert.present();
+   }
+ }

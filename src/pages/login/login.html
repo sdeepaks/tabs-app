@@ -18,25 +18,33 @@
 
   <img src="assets/imgs/logo.png" width="150" />
 
+<form (ngSubmit)="authenticate()" #registerForm="ngForm" >
+
   <ion-list class="login-form">
 <ion-row padding-bottom>
      <ion-item>
     
-    <ion-input type="text" placeholder="Email Id"></ion-input><ion-icon ios="ios-mail" md="md-mail" item-left></ion-icon>
+    <ion-input type="text" placeholder="Email Id" name="email" [(ngModel)]="loginForm.email"></ion-input>
+    <ion-icon ios="ios-mail" md="md-mail" item-left></ion-icon>
   </ion-item>
 </ion-row>
+
 <ion-row padding-bottom>
   <ion-item>
    
-    <ion-input type="password" placeholder="Password"></ion-input> <ion-icon ios="ios-lock" md="md-lock" item-left></ion-icon>
+    <ion-input type="password" placeholder="Password" name="password" [(ngModel)]="loginForm.password"></ion-input> 
+    <ion-icon ios="ios-lock" md="md-lock" item-left></ion-icon>
     <button ion-button clear color="blue" item-right>Forgot?</button>
   </ion-item>
        </ion-row>
         
 <ion-row padding-bottom>
-  <button ion-button full  color="blue" (click)="authenticate()">Login</button>
- 
 
+      <ion-col text-center>
+  <button ion-button round color="secondary" type="submit" [disabled]="!registerForm.form.valid">
+    Login
+ </button>
+</ion-col>
 </ion-row>
 
   <button ion-button outline item-end icon-start  (click)="nav_register()">
@@ -48,6 +56,7 @@
 
    </ion-list>
 
+</form>
 
 
 

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
+import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
+import { Toast } from '@ionic-native/toast';
 /**
  * Generated class for the ActivitiesPage page.
  *
@@ -15,11 +16,116 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class ActivitiesPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+expenses: any = [];
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, private sqlite: SQLite
+,
+private toast: Toast
+
+  	) {
   }
 
+ 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ActivitiesPage');
-  }
+  this.getData();
+  this.saveData();
+}
+
+ionViewWillEnter() {
+  this.getData();
+  this.saveData();
+}
+
+deleteData(rowid) {
+  this.sqlite.create({
+    name: 'ionicdb.db',
+    location: 'default'
+  }).then((db: SQLiteObject) => {
+    db.executeSql('DELETE FROM expense WHERE rowid=?', [rowid])
+    .then(res => {
+      console.log(res);
+      this.getData();
+    })
+    .catch(e => console.log(e));
+  }).catch(e => console.log(e));
 
 }
+
+
+
+getData() {
+  this.sqlite.create({
+    name: 'tabs.db',
+    location: 'default'
+  }).then((db: SQLiteObject) => {
+
+
+   db.executeSql('CREATE TABLE IF NOT EXISTS expense(expenseID INTEGER PRIMARY KEY AUTOINCREMENT , date TEXT, category TEXT, amount INT)')
+    .then(res => console.log('Executed SQL'))
+    .catch(e => console.log(e));
+   
+
+ db.executeSql('SELECT * FROM expense ORDER BY expenseID DESC')
+    .then(res => {
+      this.expenses = [];
+      for(var i=0; i<res.rows.length; i++) {
+        this.expenses.push({expenseID:res.rows.item(i).expenseID,date:res.rows.item(i).date,category:res.rows.item(i).category,amount:res.rows.item(i).amount})
+      }
+    }).catch(e => console.log(e));
+
+
+    
+    
+
+  }).catch(e => console.log(e));
+}
+
+
+
+
+
+
+
+ saveData() {
+    this.sqlite.create({
+      name: 'tabs.db',
+      location: 'default'
+    }).then((db: SQLiteObject) => {
+      db.executeSql('INSERT INTO expense VALUES(NULL,?,?,?)',['2018-07-03','House',413])
+        .then(res => {
+          console.log(res);
+          this.toast.show('Data saved', '5000', 'center').subscribe(
+            toast => {
+              this.navCtrl.popToRoot();
+            }
+          );
+        })
+        .catch(e => {
+          console.log(e);
+          this.toast.show(e, '5000', 'center').subscribe(
+            toast => {
+              console.log(toast);
+            }
+          );
+        });
+    }).catch(e => {
+      console.log(e);
+      this.toast.show(e, '5000', 'center').subscribe(
+        toast => {
+          console.log(toast);
+        }
+      );
+    });
+  }
+
+
+
+
+}
+
+
+
+
+
+
+

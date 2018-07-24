@@ -13,6 +13,8 @@ import { CreatePinPage } from '../pages/create-pin/create-pin';
 import { ValidatePinPage } from '../pages/validate-pin/validate-pin';
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 import { HttpModule } from '@angular/http';
+import { SQLite } from '@ionic-native/sqlite';
+import { Toast } from '@ionic-native/toast';
 
 @NgModule({
   declarations: [
@@ -44,7 +46,9 @@ import { HttpModule } from '@angular/http';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    AuthServiceProvider
+    AuthServiceProvider,
+     SQLite,
+     Toast
   ]
 })
 export class AppModule {}
