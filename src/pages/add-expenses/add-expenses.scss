@@ -1,5 +1,9 @@
 page-add-expenses {
-
+ion-content {
+    background-image: url('../assets/imgs/background.png');
+    backgoround-repeat:no-repeat;
+    background-size: cover;
+}
 ion-item:first-child {
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
