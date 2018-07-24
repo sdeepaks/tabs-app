@@ -43,7 +43,7 @@
 	<ion-row padding-bottom>
 		 	 <ion-item>
 			        
-		     <ion-input type="email" name="email" placeholder=" Email Id" [(ngModel)]="userRegistrationForm.emailId" required></ion-input><ion-icon ios="ios-mail" md="md-mail" item-left></ion-icon>
+		     <ion-input type="email" name="email" placeholder=" Email Id" [(ngModel)]="userRegistrationForm.emailId" pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$" required></ion-input><ion-icon ios="ios-mail" md="md-mail" item-left></ion-icon>
 
 		      </ion-item></ion-row>
 
