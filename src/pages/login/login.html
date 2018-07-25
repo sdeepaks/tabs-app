@@ -38,26 +38,25 @@
   </ion-item>
        </ion-row>
         
-<ion-row padding-bottom>
+<ion-row >
 
       <ion-col text-center>
-  <button ion-button round color="secondary" type="submit" [disabled]="!registerForm.form.valid">
+  <button ion-button round full color="secondary" type="submit" [disabled]="!registerForm.form.valid">
     Login
  </button>
 </ion-col>
 </ion-row>
 
-  <button ion-button outline item-end icon-start  (click)="nav_register()">
-      <ion-icon name="register"></ion-icon>
-     Create An Account
-    </button>
-
-
 
    </ion-list>
 
-</form>
+    
 
+</form>
+ <button ion-button outline item-end icon-start  (click)="nav_register()">
+      <ion-icon name="register"></ion-icon>
+     Create An Account
+    </button>
 
 
 </ion-content>
