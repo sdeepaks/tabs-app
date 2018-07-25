@@ -43,23 +43,25 @@ import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 
      this.auth.doLogin(this.loginForm).subscribe(data => {
 
-       
+
        let loader = this.loadingController.create({
          content: "Authenticating..."
        });  
        loader.present();
 
-       
+
        if (data.status === "success")
        {
          loader.dismiss();
          this.navCtrl.push(ValidatePinPage);
 
        }else if(data.status === "error"){
+         loader.dismiss();
          this.showPopup("Error", data.message);
 
        }
        else{
+         loader.dismiss();
          this.showPopup("Error", "No internet detected!"); 
 
        }
@@ -71,9 +73,9 @@ import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 
 
 
-     
+
    }
-   
+
    nav_register()
    {
      this.navCtrl.push(RegisterPage); 

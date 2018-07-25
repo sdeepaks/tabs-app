@@ -1,1 +1,17 @@
-<ion-nav [root]="rootPage"></ion-nav>
+
+<ion-menu [content]="content">
+<ion-content padding text-center>
+
+<img src="assets/imgs/logo.png" width="100" padding-bottom />
+
+<h5><ion-icon ios="ios-person" md="md-person" text-left></ion-icon>  Profile </h5>
+<h5><ion-icon ios="ios-mail" md="md-mail"></ion-icon>  Contact</h5>
+<h5><ion-icon ios="ios-bookmarks" md="md-bookmarks"></ion-icon>  FAQs</h5>
+
+
+</ion-content>
+
+</ion-menu>
+
+
+<ion-nav [root]="rootPage" #content></ion-nav>

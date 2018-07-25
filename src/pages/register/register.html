@@ -1,74 +1,79 @@
-		
-<ion-header>
+		<!--
+		  Generated template for the RegisterPage page.
 
-	<ion-navbar>
-		<ion-title>register</ion-title>
-	</ion-navbar>
+		  See http://ionicframework.com/docs/components/#navigation for more info on
+		  Ionic pages and navigation.
+		-->
+		<ion-header>
 
-</ion-header>
+		  <ion-navbar>
+		    <ion-title>register</ion-title>
+		  </ion-navbar>
+
+		</ion-header>
 
 
-<ion-content padding text-center>
+		<ion-content padding text-center>
 
-	<img src="assets/imgs/logo.png" width="130" />
+	  <img src="assets/imgs/logo.png" width="110" />
 
 
-	<form   (ngSubmit)="onSignUp()" #registerForm="ngForm" >
-		
-		<ion-row padding-bottom>
-			<ion-item >
-				
-				<ion-input type="text" placeholder="First Name" name="firstName" [(ngModel)]="userRegistrationForm.firstName"  required></ion-input>
+		  <form   (ngSubmit)="onSignUp()" #registerForm="ngForm" >
+	
+	<ion-row padding-bottom>
+		      <ion-item >
+		        
+		     <ion-input type="text" placeholder="First Name" name="firstName" [(ngModel)]="userRegistrationForm.firstName"  required></ion-input>
 
-				<ion-icon ios="ios-contact" md="md-contact" item-left></ion-icon>
-			</ion-item>
-		</ion-row>
-		
-		<ion-row padding-bottom>
+		     <ion-icon ios="ios-contact" md="md-contact" item-left></ion-icon>
+		      </ion-item>
+		  </ion-row>
+		  
+		      <ion-row padding-bottom>
 
-			<ion-item >
-				
-				<ion-input type="text" placeholder="Last Name" name="lastName" [(ngModel)]="userRegistrationForm.lastName"  required></ion-input>
+		      <ion-item >
+		        
+		     <ion-input type="text" placeholder="Last Name" name="lastName" [(ngModel)]="userRegistrationForm.lastName"  required></ion-input>
 
-				<ion-icon ios="ios-contact" md="md-contact" item-left></ion-icon>
-			</ion-item>
+		     <ion-icon ios="ios-contact" md="md-contact" item-left></ion-icon>
+		      </ion-item>
 
-		</ion-row>
+		  </ion-row>
 
-		<ion-row padding-bottom>
+	<ion-row padding-bottom>
+		 	 <ion-item>
+			        
+		     <ion-input type="email" name="email" placeholder=" Email Id" [(ngModel)]="userRegistrationForm.emailId" pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$" required></ion-input><ion-icon ios="ios-mail" md="md-mail" item-left></ion-icon>
+
+		      </ion-item></ion-row>
+
+	<ion-row padding-bottom>
+		       <ion-item>
+
+		        
+		      <ion-input type="password" name="password" placeholder=" Password" [(ngModel)]="userRegistrationForm.password" required></ion-input><ion-icon ios="ios-lock" md="md-lock" item-left></ion-icon>
+
+		  </ion-item></ion-row>
+	<ion-row padding-bottom>
 			<ion-item>
-				
-				<ion-input type="email" name="email" placeholder=" Email Id" [(ngModel)]="userRegistrationForm.emailId" required></ion-input><ion-icon ios="ios-mail" md="md-mail" item-left></ion-icon>
 
-			</ion-item></ion-row>
+		        
+		    <ion-input type="password" name="confPassword" placeholder=" Confirm Password" [(ngModel)]="userRegistrationForm.confPassword" required> </ion-input>
+		    <ion-icon ios="ios-lock" md="ios-lock-outline" item-left></ion-icon>
+		</ion-item></ion-row>
 
-			<ion-row padding-bottom>
-				<ion-item>
+	 <ion-row>
+	    <ion-col text-center>
+	      <button ion-button full round color="secondary" type="submit" [disabled]="!registerForm.form.valid">
+	  Sign up
+	</button>
+	    </ion-col>
+	  </ion-row>
+		    
+		    
+		    </form>
+
 
 					
-					<ion-input type="password" name="password" placeholder=" Password" [(ngModel)]="userRegistrationForm.password" required></ion-input><ion-icon ios="ios-lock" md="md-lock" item-left></ion-icon>
-
-				</ion-item></ion-row>
-				<ion-row padding-bottom>
-					<ion-item>
-
-						
-						<ion-input type="password" name="confPassword" placeholder=" Confirm Password" [(ngModel)]="userRegistrationForm.confPassword" required> </ion-input>
-						<ion-icon ios="ios-lock" md="ios-lock-outline" item-left></ion-icon>
-					</ion-item></ion-row>
-
-					<ion-row>
-						<ion-col text-center>
-							<button ion-button full round color="secondary" type="submit" [disabled]="!registerForm.form.valid">
-								Sign up
-							</button>
-						</ion-col>
-					</ion-row>
-					
-					
-				</form>
-
-
 				
-				
-			</ion-content>
+		</ion-content>

@@ -1,5 +1,9 @@
 page-validate-pin {
-
+ion-content {
+    background-image: url('../assets/imgs/background.png');
+    backgoround-repeat:no-repeat;
+    background-size: cover;
+}
 ion-item:first-child {
     border-radius: 5px;
     

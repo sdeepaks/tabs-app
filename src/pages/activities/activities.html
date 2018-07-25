@@ -1,41 +1,66 @@
-	<!--
-	  Generated template for the ActivitiesPage page.
+  <!--
+    Generated template for the ActivitiesPage page.
 
-	  See http://ionicframework.com/docs/components/#navigation for more info on
-	  Ionic pages and navigation.
-	-->
-	<ion-header>
+    See http://ionicframework.com/docs/components/#navigation for more info on
+    Ionic pages and navigation.
+  -->
+  <ion-header>
 
-	  <ion-navbar>
-	   <ion-title>TABS</ion-title>
-	  </ion-navbar>
+      <ion-navbar>
+<ion-buttons side="item-left">
 
-	</ion-header>
+  <button ion-button icon-only menuToggle>
+    <ion-icon name="menu" start></ion-icon> 
+    
+  </button></ion-buttons>
+
+     <ion-title></ion-title>
+  </ion-navbar>
 
 
-	<ion-content padding>
-		
-	<ion-list>
-     <ion-item-sliding *ngFor="let expense of expenses; let i=index">
-	  <ion-item>
-	 <ion-grid>
+  </ion-header>
+
+
+  <ion-content padding>
+    
+  <ion-list>
+    <ion-item>
+   <ion-grid>
 <ion-row justify-content-around>
     <ion-col col-2>
-      <ion-icon name="home" ></ion-icon> {{expense.category}} 
+      <ion-icon name="home" ></ion-icon> House 
     </ion-col>
     <ion-col col-2 offset-1>
-      <ion-icon name="calendar" ></ion-icon>  {{expense.date}} 
+      <ion-icon name="calendar" ></ion-icon> 2014-03-11
     </ion-col>
     <ion-col col-2 offset-2>
-     <ion-icon name="cash" ></ion-icon>  ${{expense.amount}}
+     <ion-icon name="cash" ></ion-icon>  123$
     </ion-col>
     <ion-col col-2 offset-1>
      <ion-icon name="create"></ion-icon> <a>edit</a>
     </ion-col>
 </ion-row>
 </ion-grid>
-	  </ion-item>
- </ion-item-sliding>
-	</ion-list>
+    </ion-item>
 
-	</ion-content>
+        <ion-item>
+   
+<ion-row justify-content-around>
+    <ion-col col-2>
+      <ion-icon name="restaurant" ></ion-icon> Food
+    </ion-col>
+    <ion-col col-2 offset-1>
+      <ion-icon name="calendar" ></ion-icon>  2014-03-11
+    </ion-col>
+    <ion-col col-2 offset-2>
+     <ion-icon name="cash" ></ion-icon>  43$
+    </ion-col>
+    <ion-col col-2 offset-1>
+      <ion-icon name="create"></ion-icon> <a>edit</a>
+    </ion-col>
+</ion-row>
+    
+    </ion-item>
+  </ion-list>
+
+  </ion-content>
