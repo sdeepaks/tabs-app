@@ -63,6 +63,7 @@ deleteConfirm(expenseID){
                 text: 'Yes',
                 handler: () => {
                    this.deleteExpense(expenseID);
+                   this.navCtrl.parent.select(1); 
                 }
             }
         ]
