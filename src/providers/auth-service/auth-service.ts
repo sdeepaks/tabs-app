@@ -23,6 +23,22 @@
 
 	  	constructor(public http: Http, private storage: Storage) {}
 
+	  	getAllCategories(){
+
+var category_url = "http://semicolonites.website/tabs/api/categories_all";
+
+
+	return this.http.get(category_url)
+	.do( (res:Response) => console.log(res))
+	.map( (res:Response) => res.json())
+	.catch(error => {
+
+		console.log("exception handler");
+		return JSON.parse('[{"status":"systemError"}]');
+	});
+
+	  	}
+
 	  	storeLocally(data)
 	  	{
 	  		this.storage.clear();

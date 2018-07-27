@@ -18,6 +18,7 @@ export class ActivitiesPage {
 
 expenses: any = [];
 createSuccess =true;
+totalAmount =0;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private sqlite: SQLite
 ,
@@ -44,6 +45,30 @@ editData(expenseID) {
     expenseID:expenseID
   });
 
+}
+
+deleteConfirm(expenseID){
+
+   let alert = this.alertCtrl.create({
+        title: 'Confirm delete expense',
+        message: 'Are you sure you want to permanently delete this expense?',
+        buttons: [
+            {
+                text: 'No',
+                handler: () => {
+                    console.log('Delete Cancelled');
+                }
+            },
+            {
+                text: 'Yes',
+                handler: () => {
+                   this.deleteExpense(expenseID);
+                }
+            }
+        ]
+    });
+
+    alert.present();
 }
 
 
@@ -93,7 +118,21 @@ db.executeSql('SELECT * FROM expense where isDeleted=0 ORDER BY expenseID DESC',
     })
     .catch(e => console.log(e));
 
+  db.executeSql('SELECT SUM(amount) AS totalExpense FROM expense', [])
+    .then(res => {
+      if(res.rows.length>0) {
+        this.totalAmount = parseInt(res.rows.item(0).totalExpense);
+      }
+    }).catch(e => console.log(e));
+  
+
+
+
   }).catch(e => console.log(e));
+
+
+
+
 }
 
 

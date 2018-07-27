@@ -6,48 +6,63 @@
   -->
   <ion-header>
 
-      <ion-navbar>
-<ion-buttons side="item-left">
+    <ion-navbar>
+      <ion-buttons side="item-left">
 
-  <button ion-button icon-only menuToggle>
-    <ion-icon name="menu" start></ion-icon> 
-    
-  </button></ion-buttons>
+        <button ion-button icon-only menuToggle>
+          <ion-icon name="menu" start></ion-icon> 
 
-     <ion-title></ion-title>
-  </ion-navbar>
+        </button></ion-buttons>
 
-
-  </ion-header>
+        <ion-title></ion-title>
+      </ion-navbar>
 
 
-  <ion-content padding>
-    
-  <ion-list>
-     <ion-item-sliding *ngFor="let expense of expenses;">
-    <ion-item>
-   <ion-grid>
-<ion-row justify-content-around>
-    <ion-col col-2>
-      <ion-icon name="home" ></ion-icon> {{expense.category}} 
-    </ion-col>
-    <ion-col col-2 offset-1>
-      <ion-icon name="calendar" ></ion-icon>  {{expense.date}} 
-    </ion-col>
-    <ion-col col-2 offset-2>
-     <ion-icon name="cash" ></ion-icon>  ${{expense.amount}}
-    </ion-col>
-    <ion-col col-2 offset-1>
-     <ion-icon name="create"></ion-icon> <a (click)="editData(expense.expenseID)">Edit </a>
-    </ion-col>
-    <ion-col col-2 offset-1>
-      <ion-icon name="close-circle"></ion-icon> <a (click)="deleteExpense(expense.expenseID)">Delete </a>
-    </ion-col>
-</ion-row>
-</ion-grid>
+    </ion-header>
 
-    </ion-item>
+
+    <ion-content padding-top>
+
+      <ion-list>
+       <ion-item-sliding *ngFor="let expense of expenses;">
+        <ion-item>
+        
+<div item-start>
+               <h2><ion-icon name="calendar"  ></ion-icon>  {{expense.date}}</h2>
+
+               <p>
+                <ion-icon name="home" ></ion-icon> {{expense.category}} 
+              </p>
+
+              <h3 side="right">
+                <ion-icon name="cash" ></ion-icon>  $ {{expense.amount}} 
+              </h3>
+
+   </div>       
+
+          
+              <div item-end>
+              <button ion-button outline small (click)="editData(expense.expenseID)">
+                <ion-icon name="create"></ion-icon>
+              Edit</button>
+            
+            <br/>
+            <p></p>
+
+              <button ion-button  outline small color="danger" (click)="deleteConfirm(expense.expenseID)">
+               <ion-icon name="close-circle"></ion-icon>
+             Delete</button>
+           </div>
+         
+   </ion-item>
+
  </ion-item-sliding>
-  </ion-list>
+</ion-list>
 
-  </ion-content>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-title>Total Amount: ${{totalAmount}}</ion-title>
+  </ion-toolbar>
+</ion-footer>

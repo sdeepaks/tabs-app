@@ -27,9 +27,9 @@
 <ion-item>
   <ion-label>Category</ion-label>
   <ion-select [(ngModel)]="expenseForm.category" name="category" required>
-    <ion-option value="Housenote">Housenote</ion-option>
-    <ion-option value="Insurance">Insurance</ion-option>
-    <ion-option value="Food">Food</ion-option>
+    
+    <ion-option *ngFor="let category of categories;" [value] = "category.category" >{{category.category}}
+    </ion-option>
   </ion-select>
 </ion-item></ion-row>
 

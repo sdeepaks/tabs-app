@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams ,AlertController} from 'ionic-angular';
-import {  FormBuilder, FormGroup, Validators   } from '@angular/forms';
 import { MainPage } from '../main/main';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 /**
@@ -22,7 +21,7 @@ import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
    createPINForm = { PIN: '', confPIN: ''};
    
    
-   constructor(public navCtrl: NavController, public navParams: NavParams,private formBuilder: FormBuilder,
+   constructor(public navCtrl: NavController, public navParams: NavParams,
 
      private auth: AuthServiceProvider,
      private alertCtrl: AlertController
