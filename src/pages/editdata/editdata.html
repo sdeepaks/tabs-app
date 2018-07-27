@@ -1,11 +1,12 @@
 <!--
-  Generated template for the AddExpensesPage page.
+  Generated template for the EditdataPage page.
 
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
 <ion-header>
 
+  
   <ion-navbar>
 <ion-buttons side="item-left">
 
@@ -21,12 +22,12 @@
 
 
 <ion-content padding>
-   <form   (ngSubmit)="addExpense()" #registerForm="ngForm" >
+<form   (ngSubmit)="updateExpense()" #registerForm="ngForm" >
 
 <ion-row padding-bottom>
 <ion-item>
   <ion-label>Category</ion-label>
-  <ion-select [(ngModel)]="expenseForm.category" name="category" required>
+  <ion-select [(ngModel)]="editExpenseForm.category" name="category" required>
     <ion-option value="Housenote">Housenote</ion-option>
     <ion-option value="Insurance">Insurance</ion-option>
     <ion-option value="Food">Food</ion-option>
@@ -35,24 +36,24 @@
 
 <ion-row padding-bottom>
 <ion-item>
-  <ion-input type="text" placeholder="Bill No." name="billNo" [(ngModel)]="expenseForm.billNo" required></ion-input>
+  <ion-input type="text" placeholder="Bill No." name="billNo" [(ngModel)]="editExpenseForm.billNo" required></ion-input>
   <ion-icon ios="ios-paper" md="md-paper" item-left></ion-icon>
 </ion-item></ion-row>
 
 <ion-row padding-bottom>
 <ion-item>
-  <ion-input type="text" placeholder="Amount" name="amount" [(ngModel)]="expenseForm.amount" required></ion-input>
+  <ion-input type="text" placeholder="Amount" name="amount" [(ngModel)]="editExpenseForm.amount" required></ion-input>
   <ion-icon ios="logo-usd" md="logo-usd" item-left></ion-icon>
 </ion-item></ion-row>
 
 <ion-row padding-bottom>
 <ion-item>
   <ion-label>Date</ion-label>
-  <ion-datetime displayFormat="DD/MM/YYYY" pickerFormat="DD MMMM YYYY" name="date" [(ngModel)]="expenseForm.date" required></ion-datetime>
+  <ion-datetime displayFormat="DD/MM/YYYY" pickerFormat="DD MMMM YYYY" name="date" [(ngModel)]="editExpenseForm.date" required></ion-datetime>
   <ion-icon ios="ios-calendar" md="md-calendar" item-left></ion-icon>
 </ion-item>
 </ion-row>
-
+<ion-input type="hidden" [(ngModel)]="editExpenseForm.expenseID" name="expenseID"></ion-input>
 
 
 <ion-row>

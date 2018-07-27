@@ -38,7 +38,7 @@
      <ion-icon name="cash" ></ion-icon>  ${{expense.amount}}
     </ion-col>
     <ion-col col-2 offset-1>
-     <ion-icon name="create"></ion-icon> <a>edit</a>
+     <ion-icon name="create"></ion-icon> <a (click)="editData(expense.expenseID)">edit </a>
     </ion-col>
 </ion-row>
 </ion-grid>

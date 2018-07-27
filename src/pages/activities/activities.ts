@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams ,AlertController } from 'ionic-angular';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
-import { Toast } from '@ionic-native/toast';
+import { EditdataPage } from '../editdata/editdata';
 /**
  * Generated class for the ActivitiesPage page.
  *
@@ -21,7 +21,6 @@ createSuccess =true;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private sqlite: SQLite
 ,
-private toast: Toast,
  private alertCtrl: AlertController
 
   	) {
@@ -39,6 +38,14 @@ ionViewWillEnter() {
 
 
 }
+
+editData(expenseID) {
+  this.navCtrl.push(EditdataPage, {
+    expenseID:expenseID
+  });
+
+}
+
 
 deleteData(rowid) {
   this.sqlite.create({

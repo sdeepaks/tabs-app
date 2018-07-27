@@ -8,6 +8,7 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { MainPage } from '../pages/main/main';
+import { EditdataPage } from '../pages/editdata/editdata';
 import { RegisterPage } from '../pages/register/register';
 import { CreatePinPage } from '../pages/create-pin/create-pin';
 import { ValidatePinPage } from '../pages/validate-pin/validate-pin';
@@ -24,7 +25,8 @@ import { Toast } from '@ionic-native/toast';
     MainPage,
     RegisterPage,
     CreatePinPage,
-    ValidatePinPage
+    ValidatePinPage,
+    EditdataPage
   ],
   imports: [
     BrowserModule,
@@ -40,7 +42,8 @@ import { Toast } from '@ionic-native/toast';
     MainPage,
     RegisterPage,
     CreatePinPage,
-    ValidatePinPage
+    ValidatePinPage,
+    EditdataPage
   ],
   providers: [
     StatusBar,
