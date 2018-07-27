@@ -36,7 +36,7 @@ export class AddExpensesPage {
 			name: 'tabs.db',
 			location: 'default'
 		}).then((db: SQLiteObject) => {
-			db.executeSql('INSERT INTO expense VALUES(null,?,?,?,?)',[this.expenseForm.billNo,this.expenseForm.date,this.expenseForm.category ,this.expenseForm.amount])
+			db.executeSql('INSERT INTO expense VALUES(null,?,?,?,?,0,0)',[this.expenseForm.billNo,this.expenseForm.date,this.expenseForm.category ,this.expenseForm.amount])
 
 			.then(res => {
 				console.log("TABS Called" + res);

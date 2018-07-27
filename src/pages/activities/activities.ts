@@ -47,18 +47,30 @@ editData(expenseID) {
 }
 
 
-deleteData(rowid) {
+deleteExpense(expenseID) {
+
   this.sqlite.create({
-    name: 'ionicdb.db',
-    location: 'default'
-  }).then((db: SQLiteObject) => {
-    db.executeSql('DELETE FROM expense WHERE rowid=?', [rowid])
-    .then(res => {
-      console.log(res);
-      this.getData();
-    })
-    .catch(e => console.log(e));
-  }).catch(e => console.log(e));
+      name: 'tabs.db',
+      location: 'default'
+    }).then((db: SQLiteObject) => {
+      db.executeSql('UPDATE expense SET isDeleted=1 where expenseID=?',[expenseID])
+        .then(res => {
+          console.log(res);
+         this.showPopup("Success", "Expense deleted successfully!");
+       
+
+        })
+        .catch(e => {
+          console.log(e);
+         this.showPopup("Error", "Expense not updated");
+
+        });
+    }).catch(e => {
+      console.log(e);
+      this.showPopup("Error", "Something went wrong");
+
+     
+    });
 
 }
 
@@ -72,7 +84,7 @@ getData() {
     location: 'default'
   }).then((db: SQLiteObject) => {
 
-db.executeSql('SELECT * FROM expense ORDER BY expenseID DESC', [])
+db.executeSql('SELECT * FROM expense where isDeleted=0 ORDER BY expenseID DESC', [])
     .then(res => {
       this.expenses = [];
       for(var i=0; i<res.rows.length; i++) {
@@ -96,7 +108,7 @@ showPopup(title, text) {
          text: 'OK',
          handler: data => {
            if (this.createSuccess) {
-
+  this.navCtrl.push(ActivitiesPage);
            }
          }
        }

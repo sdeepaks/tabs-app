@@ -40,7 +40,7 @@ createDB()
   }).then((db: SQLiteObject) => {
 
 
-   db.executeSql('CREATE TABLE IF NOT EXISTS expense(expenseID INTEGER PRIMARY KEY AUTOINCREMENT ,billNo, date TEXT, category TEXT, amount INT)',[])
+   db.executeSql('CREATE TABLE IF NOT EXISTS expense(expenseID INTEGER PRIMARY KEY AUTOINCREMENT ,billNo, date TEXT, category TEXT, amount INT,isSynced INT, isDeleted INT)',[])
     .then(res => console.log('TABS:info:getData() Executed SQL'))
     .catch(e => console.log("TABS:Error:getData()" + e));  
 
