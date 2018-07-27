@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams ,AlertController } from 'ionic-angular';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 import { Toast } from '@ionic-native/toast';
 /**
@@ -17,23 +17,27 @@ import { Toast } from '@ionic-native/toast';
 export class ActivitiesPage {
 
 expenses: any = [];
+createSuccess =true;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private sqlite: SQLite
 ,
-private toast: Toast
+private toast: Toast,
+ private alertCtrl: AlertController
 
   	) {
+  	
   }
 
  
   ionViewDidLoad() {
   this.getData();
-  this.saveData();
+  
 }
 
 ionViewWillEnter() {
   this.getData();
-  this.saveData();
+
+
 }
 
 deleteData(rowid) {
@@ -54,28 +58,21 @@ deleteData(rowid) {
 
 
 getData() {
+
+	
   this.sqlite.create({
     name: 'tabs.db',
     location: 'default'
   }).then((db: SQLiteObject) => {
 
-
-   db.executeSql('CREATE TABLE IF NOT EXISTS expense(expenseID INTEGER PRIMARY KEY AUTOINCREMENT , date TEXT, category TEXT, amount INT)')
-    .then(res => console.log('Executed SQL'))
-    .catch(e => console.log(e));
-   
-
- db.executeSql('SELECT * FROM expense ORDER BY expenseID DESC')
+db.executeSql('SELECT * FROM expense ORDER BY expenseID DESC', [])
     .then(res => {
       this.expenses = [];
       for(var i=0; i<res.rows.length; i++) {
         this.expenses.push({expenseID:res.rows.item(i).expenseID,date:res.rows.item(i).date,category:res.rows.item(i).category,amount:res.rows.item(i).amount})
       }
-    }).catch(e => console.log(e));
-
-
-    
-    
+    })
+    .catch(e => console.log(e));
 
   }).catch(e => console.log(e));
 }
@@ -83,43 +80,23 @@ getData() {
 
 
 
+showPopup(title, text) {
+     let alert = this.alertCtrl.create({
+       title: title,
+       subTitle: text,
+       buttons: [
+       {
+         text: 'OK',
+         handler: data => {
+           if (this.createSuccess) {
 
-
-
- saveData() {
-    this.sqlite.create({
-      name: 'tabs.db',
-      location: 'default'
-    }).then((db: SQLiteObject) => {
-      db.executeSql('INSERT INTO expense VALUES(NULL,?,?,?)',['2018-07-03','House',413])
-        .then(res => {
-          console.log(res);
-          this.toast.show('Data saved', '5000', 'center').subscribe(
-            toast => {
-              this.navCtrl.popToRoot();
-            }
-          );
-        })
-        .catch(e => {
-          console.log(e);
-          this.toast.show(e, '5000', 'center').subscribe(
-            toast => {
-              console.log(toast);
-            }
-          );
-        });
-    }).catch(e => {
-      console.log(e);
-      this.toast.show(e, '5000', 'center').subscribe(
-        toast => {
-          console.log(toast);
-        }
-      );
-    });
-  }
-
-
-
+           }
+         }
+       }
+       ]
+     });
+     alert.present();
+   }
 
 }
 
