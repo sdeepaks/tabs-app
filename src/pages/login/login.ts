@@ -3,6 +3,8 @@ import { IonicPage, NavController, NavParams,AlertController,LoadingController }
 import { ValidatePinPage } from '../validate-pin/validate-pin';
 import { RegisterPage } from '../register/register';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
+import { CreatePinPage } from '../create-pin/create-pin';
+import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 
 
 
@@ -22,18 +24,51 @@ import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 
    loginForm = { email: '', password: ''};
    createSuccess=true;
+   storedPIN=0;
 
 
    constructor(public navCtrl: NavController, public navParams: NavParams,
      private auth: AuthServiceProvider,
      private alertCtrl: AlertController,
+     private sqlite: SQLite,
      public loadingController: LoadingController
      ) {
    }
 
    ionViewDidLoad() {
-     console.log('ionViewDidLoad LoginPage');
-   }
+
+
+    let loader = this.loadingController.create({
+         content: "Loading..."
+       });  
+       loader.present();
+
+
+this.sqlite.create({
+    name: 'tabs.db',
+    location: 'default'
+  }).then((db: SQLiteObject) => {
+
+db.executeSql('SELECT * FROM userInfo', [])
+    .then(res => {
+
+if(res.rows.length !=0)
+{
+ this.storedPIN=res.rows.item(0).pin;    
+    console.log("userINFO:" +this.storedPIN);
+
+     loader.dismiss();
+  this.navCtrl.push(ValidatePinPage,{email: this.loginForm.email,storedPIN: this.storedPIN});
+
+  }else{
+     loader.dismiss();
+  }
+
+   })
+  });
+ loader.dismiss();
+}
+
 
    authenticate()
    {
@@ -52,10 +87,11 @@ import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 
        if (data.status === "success")
        {
+         console.log("Authenticated Successfully");
          loader.dismiss();
-         this.navCtrl.push(ValidatePinPage);
+         this.navCtrl.push(CreatePinPage,{emailId: this.loginForm.email});
 
-       }else if(data.status === "error"){
+        }else if(data.status === "error"){
          loader.dismiss();
          this.showPopup("Error", data.message);
 
@@ -68,18 +104,16 @@ import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 
      });
 
-
-
-
-
-
-
    }
+
+
+
 
    nav_register()
    {
      this.navCtrl.push(RegisterPage); 
    }
+
 
    showPopup(title, text) {
      let alert = this.alertCtrl.create({

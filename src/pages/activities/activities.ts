@@ -139,6 +139,9 @@ db.executeSql('SELECT * FROM expense where isDeleted=0 ORDER BY expenseID DESC',
 
 
 
+
+
+
 showPopup(title, text) {
      let alert = this.alertCtrl.create({
        title: title,

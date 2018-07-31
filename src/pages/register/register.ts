@@ -1,8 +1,7 @@
 	import { Component } from '@angular/core';
 	import { IonicPage, NavController, NavParams,AlertController  } from 'ionic-angular';
-	import {  FormBuilder, FormGroup, Validators 	} from '@angular/forms';
-	import { CreatePinPage } from '../create-pin/create-pin';
 	import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
+	import { CreatePinPage } from '../create-pin/create-pin';
 
 	/**
 	* Generated class for the RegisterPage page.
@@ -26,19 +25,12 @@
 
 		constructor(public navCtrl: NavController, 
 			public navParams: NavParams , 
-			private formBuilder: FormBuilder,
 			private auth: AuthServiceProvider,
 			private alertCtrl: AlertController
 			) 
 		{
 
-			/*this.userRegistrationForm = this.formBuilder.group({
-				name : ['',Validators.required],
-				email: ['',Validators.required],
-				password: ['',Validators.required],
-				confPassword :['',Validators.required]
-
-			});*/
+		
 
 		}
 

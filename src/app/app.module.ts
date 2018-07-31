@@ -16,7 +16,7 @@ import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 import { HttpModule } from '@angular/http';
 import { SQLite } from '@ionic-native/sqlite';
 import { Toast } from '@ionic-native/toast';
-
+import { HeaderMenuComponent } from '../components/header-menu/header-menu';
 @NgModule({
   declarations: [
     MyApp,
@@ -26,7 +26,8 @@ import { Toast } from '@ionic-native/toast';
     RegisterPage,
     CreatePinPage,
     ValidatePinPage,
-    EditdataPage
+    EditdataPage,
+    HeaderMenuComponent
   ],
   imports: [
     BrowserModule,
@@ -52,6 +53,7 @@ import { Toast } from '@ionic-native/toast';
     AuthServiceProvider,
      SQLite,
      Toast
+
   ]
 })
 export class AppModule {}

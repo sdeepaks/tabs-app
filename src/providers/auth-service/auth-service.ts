@@ -1,6 +1,7 @@
 	import { Injectable } from '@angular/core';
-	import { Http,Headers, RequestOptions ,Response } from '@angular/http';
+	import { Http ,Response } from '@angular/http';
 	import {Observable} from 'rxjs/Observable';
+	import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 	import 'rxjs/add/operator/do';
 	import 'rxjs/add/operator/catch';
 	import 'rxjs/add/operator/map';
@@ -20,8 +21,9 @@
 	  	static readonly REGISTER_URL = 'http://semicolonites.website/tabs/api/user';
 	  	access: boolean;
 	  	token: string;
+	  userPIN=0;
 
-	  	constructor(public http: Http, private storage: Storage) {}
+	  	constructor(public http: Http, private storage: Storage,private sqlite: SQLite) {}
 
 	  	getAllCategories(){
 
@@ -151,16 +153,109 @@ public  doLogin(loginForm)  {
 	  	return this.token;
 	  }
 
-	  // Logout   
-	  public logout() {
-	  	return Observable.create(observer => {
-	  		observer.next(true);
-	  		observer.complete();
-	  	});
-	  }
+	
+
+
+createDB()
+  {
+    this.sqlite.create({
+      name: 'tabs.db',
+      location: 'default'
+    }).then((db: SQLiteObject) => {
+
+
+      db.executeSql('CREATE TABLE IF NOT EXISTS expense(expenseID INTEGER PRIMARY KEY AUTOINCREMENT ,billNo TEXT, date TEXT, category TEXT, amount INT,isSynced INT, isDeleted INT)',[])
+      .then(res => console.log('TABS:info:expense table created'))
+      .catch(e => console.log("TABS:Error:while creating expense table" + e));  
+
+      
+
+      db.executeSql('CREATE TABLE IF NOT EXISTS categories(categoryID INTEGER PRIMARY KEY AUTOINCREMENT ,category TEXT)',[])
+      .then(res => console.log('TABS:info:categories table created'))
+      .catch(e => console.log("TABS:Error:in creating categories table" + e));  
+
+      db.executeSql('CREATE TABLE IF NOT EXISTS userInfo(userID INTEGER PRIMARY KEY AUTOINCREMENT ,email TEXT, pin TEXT)',[])
+      .then(res => console.log('TABS:info:userInfo table created'))
+      .catch(e => console.log("TABS:Error:in userInfo categories table" + e));  
+
+      
+
+    }
+
+
+    ).catch(e => console.log(e));
+  }
+
+logout()
+{
+
+	
+
+
+	this.sqlite.create({
+      name: 'tabs.db',
+      location: 'default'
+    }).then((db: SQLiteObject) => {
+
+db.executeSql('DELETE TABLE IF EXISTS categories',[])
+      .then(res => console.log('TABS:info:categories table deleted'))
+      .catch(e => console.log("TABS:Error:in deleting categories table" + e));  
+
+       db.executeSql('DELETE TABLE IF EXISTS userInfo',[])
+      .then(res => console.log('TABS:info:userInfo table deleted'))
+      .catch(e => console.log("TABS:Error:in deletion of userInfo  table" + e));  
+
+      db.executeSql('DELETE TABLE IF EXISTS expense',[])
+      .then(res => console.log('TABS:info:expense table deleted'))
+      .catch(e => console.log("TABS:Error:while deleting expense table" + e));  
+
+
+ 
+
+
+    }
+
+
+    ).catch(e => console.log(e));
+
+
+    
+  }
 
 
 
+
+
+  
+
+ storeUserInfo(email,pin)
+   {
+
+
+
+console.log("email"+ email+ "pin" +pin);
+     this.sqlite.create({
+      name: 'tabs.db',
+      location: 'default'
+    }).then((db: SQLiteObject) => {
+      db.executeSql('INSERT INTO userInfo VALUES(1,?,?)',[email,pin])
+
+      .then(res => {
+        console.log("DataSaved userInfo" + res);
+        
+
+      })
+      .catch(e => {
+        console.log("Error in StoreUserInfo"+ JSON.stringify(e));
+        
+      });
+
+    }).catch(e => {
+      console.log("error in INSERT"+JSON.stringify(e));
+
+    });
+
+   }
 
 
 	}

@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams,AlertController } from 'ionic-angular';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 import { ActivitiesPage } from '../activities/activities';
-import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 
 
 
@@ -21,8 +20,7 @@ export class AddExpensesPage {
 		public navCtrl: NavController, 
 		public navParams: NavParams,
 		private sqlite: SQLite,
-		private alertCtrl: AlertController,
-		private auth: AuthServiceProvider
+		private alertCtrl: AlertController
 		) {
 
 
@@ -87,6 +85,8 @@ db.executeSql('SELECT * FROM categories', [])
 			this.showPopup("Error", "System Error");
 
 		});
+
+		
 	}
 
 

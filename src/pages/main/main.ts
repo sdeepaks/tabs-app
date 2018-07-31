@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController } from 'ionic-angular';
+import { IonicPage, NavController,Platform } from 'ionic-angular';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 
@@ -18,23 +18,27 @@ export class MainPage {
 
 
   constructor(public navCtrl: NavController, private sqlite: SQLite,
-    private auth: AuthServiceProvider
+    private auth: AuthServiceProvider,
+    private platform: Platform,
     ) {
 
  this. getAllCategories();
 
+ platform.registerBackButtonAction(function (event) {
+   platform.exitApp();
+}, 100);
+
+
   }
   ionViewDidLoad() {
 
-    this.createDB();
-   
+    
+    
 
   }
 
   ionViewWillEnter() {
-
-    this.createDB();
-    
+ 
 
   }
 
@@ -73,30 +77,10 @@ export class MainPage {
   }
 
 
-  createDB()
-  {
-    this.sqlite.create({
-      name: 'tabs.db',
-      location: 'default'
-    }).then((db: SQLiteObject) => {
+  
 
 
-      db.executeSql('CREATE TABLE IF NOT EXISTS expense(expenseID INTEGER PRIMARY KEY AUTOINCREMENT ,billNo TEXT, date TEXT, category TEXT, amount INT,isSynced INT, isDeleted INT)',[])
-      .then(res => console.log('TABS:info:expense table created'))
-      .catch(e => console.log("TABS:Error:while creating expense table" + e));  
 
-      
-
-      db.executeSql('CREATE TABLE IF NOT EXISTS categories(categoryID INTEGER PRIMARY KEY AUTOINCREMENT ,category TEXT)',[])
-      .then(res => console.log('TABS:info:categories table created'))
-      .catch(e => console.log("TABS:Error:in creating categories table" + e));  
-
-      
-
-    }
-
-
-    ).catch(e => console.log(e));
-  }
+  
 
 }
