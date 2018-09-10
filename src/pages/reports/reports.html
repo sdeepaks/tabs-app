@@ -23,7 +23,33 @@
 
 <ion-content padding>
 
+<ion-grid>
+  <ion-row>
+    <ion-col>
+     Category
+    </ion-col>
+    <ion-col>
+      Date
+    </ion-col>
+    <ion-col>
+      Total Amount
+    </ion-col>
+  </ion-row>
 
+
+ <ion-row *ngFor="let data of reportData;">
+    <ion-col>
+     {{data.category}} 
+    </ion-col>
+    <ion-col>
+      Date
+    </ion-col>
+    <ion-col>
+      {{data.totalAmout}} 
+    </ion-col>
+  </ion-row>
+
+</ion-grid>
 
 
 </ion-content>

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
+import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 /**
  * Generated class for the ReportsPage page.
  *
@@ -15,11 +15,45 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class ReportsPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+	reportData =[]
+	createSuccess=true;
+
+
+  constructor(
+  	public navCtrl: NavController, 
+  	public navParams: NavParams,
+  	private sqlite: SQLite,
+
+  	) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ReportsPage');
+    console.log('report page loaded');
+    this.createReport('09-09-2018','10-09-2018');
   }
+
+
+  createReport(startDate,endDate) {
+
+	console.log("createReport called:" + startDate +" EndDate" + endDate);
+
+  this.sqlite.create({
+    name: 'tabs.db',
+    location: 'default'
+  }).then((db: SQLiteObject) => {
+
+db.executeSql('SELECT category,SUM(amount) as totalAmount FROM expense GROUP BY category ', [])
+    .then(res => {
+      this.reportData = [];
+      for(var i=0; i<res.rows.length; i++) {
+      	console.log("CATEGORY-->" + res.rows.item(i).category + "Amount-->" + res.rows.item(i).totalAmount);
+        this.reportData.push({category:res.rows.item(i).category,totalAmout:res.rows.item(i).totalAmount })
+      }
+    })
+    .catch(e => console.log('Error in generating the report'));
+
+  }).catch(e => console.log(e));
+}
+
 
 }

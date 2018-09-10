@@ -15,6 +15,7 @@ export class AddExpensesPage {
 	expenseForm={category:"", billNo : "" , amount :"", date : ""}
 	createSuccess=true;
 	categories: any= [];
+	subCategories: any= [];
 
 	constructor(
 		public navCtrl: NavController, 
@@ -53,6 +54,29 @@ db.executeSql('SELECT * FROM categories', [])
       }
     })
     .catch(e => console.log(e));
+
+  }).catch(e => console.log(e));
+}
+
+
+getSubCategories(category) {
+
+	console.log("getSubCategories called:" + category);
+
+  this.sqlite.create({
+    name: 'tabs.db',
+    location: 'default'
+  }).then((db: SQLiteObject) => {
+
+db.executeSql('SELECT subCategory FROM subCategories where category=?', [category])
+    .then(res => {
+      this.subCategories = [];
+      for(var i=0; i<res.rows.length; i++) {
+      	console.log("Sub-CATEGORY-->" + res.rows.item(i).subCategory);
+        this.subCategories.push({subCategory:res.rows.item(i).subCategory})
+      }
+    })
+    .catch(e => console.log('Error in fetching sub-categories'));
 
   }).catch(e => console.log(e));
 }

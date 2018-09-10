@@ -174,6 +174,10 @@ createDB()
       .then(res => console.log('TABS:info:categories table created'))
       .catch(e => console.log("TABS:Error:in creating categories table" + e));  
 
+      db.executeSql('CREATE TABLE IF NOT EXISTS subCategories(subCategoriesID INTEGER PRIMARY KEY AUTOINCREMENT ,subCategory TEXT,category TEXT)',[])
+      .then(res => console.log('TABS:info:sub-categories table created'))
+      .catch(e => console.log("TABS:Error:in creating sub-categories table" + e));  
+
       db.executeSql('CREATE TABLE IF NOT EXISTS userInfo(userID INTEGER PRIMARY KEY AUTOINCREMENT ,email TEXT, pin TEXT)',[])
       .then(res => console.log('TABS:info:userInfo table created'))
       .catch(e => console.log("TABS:Error:in userInfo categories table" + e));  

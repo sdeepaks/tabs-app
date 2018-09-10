@@ -22,23 +22,23 @@ export class MainPage {
     private platform: Platform,
     ) {
 
- this. getAllCategories();
+    this. getAllCategories();
 
- platform.registerBackButtonAction(function (event) {
-   platform.exitApp();
-}, 100);
+    platform.registerBackButtonAction(function (event) {
+      platform.exitApp();
+    }, 100);
 
 
   }
   ionViewDidLoad() {
 
-    
-    
+
+
 
   }
 
   ionViewWillEnter() {
- 
+
 
   }
 
@@ -54,7 +54,7 @@ export class MainPage {
         location: 'default'
       }).then((db: SQLiteObject) => {
 
- for (var i = 0; i < data.length; ++i) {
+        for (var i = 0; i < data.length; ++i) {
           db.executeSql('INSERT INTO categories VALUES(?,?)',[data[i].cat_id ,data[i].cat_name])
           .then(res => {
             console.log("categories inserted" + res);
@@ -62,17 +62,34 @@ export class MainPage {
           .catch(e => {
             console.log(e);
           });
-}
-  
+        }
+
+
+        
+          db.executeSql('INSERT INTO subCategories VALUES(null,?,?)',['Oil','Groceries'])
+          .then(res => {
+            console.log("sub-categories inserted" + res);
+          })
+          .catch(e => {
+            console.log(e);
+          });
+
+          db.executeSql('INSERT INTO subCategories VALUES(null,?,?)',['KFC','Food'])
+          .then(res => {
+            console.log("sub-categories inserted" + res);
+          })
+          .catch(e => {
+            console.log(e);
+          });
 
 
 
 
-   }).catch(e => {
+      }).catch(e => {
         console.log("error in INSERT category"+JSON.stringify(e));
       });
 
- });
+    });
 
   }
 
