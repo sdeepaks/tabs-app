@@ -10,6 +10,7 @@ import { EditprofilePage } from '../../pages/editprofile/editprofile';
  })
 
  export class HeaderMenuComponent {
+ 	@ViewChild(Nav) nav: Nav;
  	constructor(
  		public menuCtrl: MenuController,
  		public app: App,
@@ -19,7 +20,7 @@ import { EditprofilePage } from '../../pages/editprofile/editprofile';
 
  		 	}
 
-@ViewChild(NavController) nav: NavController;
+
 
  	logoutClicked() {
  		console.log("Logout");
@@ -35,7 +36,8 @@ import { EditprofilePage } from '../../pages/editprofile/editprofile';
 
  	openProfile()
  	{
- 		var nav = this.app.getRootNav();
-    	nav.setRoot(EditprofilePage);
+ 		this.menuCtrl.close();
+ 		 this.app.getRootNav().push(EditprofilePage);
+    	
  	}
  }

@@ -47,7 +47,9 @@ import { HeaderMenuComponent } from '../components/header-menu/header-menu';
     RegisterPage,
     CreatePinPage,
     ValidatePinPage,
-    EditdataPage
+    EditdataPage,
+    EditprofilePage
+
   ],
   providers: [
     StatusBar,

@@ -14,6 +14,7 @@ import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
    emailId :string;
    firstName :string;
    lastName :string;
+   password :string;
    userInfo: any= [];
 
    createPINForm = { PIN: '', confPIN: ''};
@@ -28,6 +29,7 @@ import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
      this.emailId = navParams.get('emailId');
      this.firstName =navParams.get('firstName');
      this.lastName=navParams.get('lastName');
+     this.password=navParams.get('lastName');
    }
 
    ionViewDidLoad() {

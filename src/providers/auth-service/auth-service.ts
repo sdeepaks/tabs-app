@@ -247,7 +247,7 @@ logout()
 
   
 
- storeUserInfo(email,pin,firstName,lastName)
+ storeUserInfo(email,pin,firstName,lastName,password)
    {
 
 
@@ -257,7 +257,7 @@ console.log("email"+ email+ "pin" +pin);
       name: 'tabs.db',
       location: 'default'
     }).then((db: SQLiteObject) => {
-      db.executeSql('INSERT INTO userInfo VALUES(1,?,?,?,?)',[email,pin,firstName,lastName])
+      db.executeSql('INSERT INTO userInfo VALUES(1,?,?,?,?,)',[email,pin,firstName,lastName,password])
 
       .then(res => {
         console.log("DataSaved userInfo" + res);

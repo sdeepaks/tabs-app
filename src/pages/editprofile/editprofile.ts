@@ -36,7 +36,7 @@ db.executeSql('SELECT * FROM userInfo', [])
       this.userProfile.lastName=res.rows.item(0).lastName;
       this.userProfile.emailId=res.rows.item(0).email;
       this.userProfile.password=res.rows.item(0).password;
-
+      this.userProfile.confPassword=res.rows.item(0).password;
     })
     .catch(e => console.log(e));
 
