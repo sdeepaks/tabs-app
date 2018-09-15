@@ -33,11 +33,12 @@ import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
      private sqlite: SQLite,
      public loadingController: LoadingController
      ) {
+
    }
 
    ionViewDidLoad() {
 
-
+      this.auth.createDB();
     let loader = this.loadingController.create({
          content: "Loading..."
        });  

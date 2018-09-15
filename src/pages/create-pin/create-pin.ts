@@ -12,6 +12,8 @@ import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
  export class CreatePinPage {
    createSuccess=true;
    emailId :string;
+   firstName :string;
+   lastName :string;
    userInfo: any= [];
 
    createPINForm = { PIN: '', confPIN: ''};
@@ -24,10 +26,12 @@ import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
      
      ) {
      this.emailId = navParams.get('emailId');
+     this.firstName =navParams.get('firstName');
+     this.lastName=navParams.get('lastName');
    }
 
    ionViewDidLoad() {
-     console.log('ionViewDidLoad CreatePinPage');
+     console.log('CreatePinPage Loaded');
    }
 
    createPIN()
@@ -51,7 +55,7 @@ import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
          if (data.status === "success")
          {
            this.showPopup("Successfully", 'PIN Created successfully!');
-           this.auth.storeUserInfo(this.emailId,this.createPINForm.PIN);
+           this.auth.storeUserInfo(this.emailId,this.createPINForm.PIN,this.firstName,this.lastName);
            this.navCtrl.push(MainPage,{emailId: this.emailId});
 
 

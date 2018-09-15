@@ -1,0 +1,76 @@
+<!--
+  Generated template for the EditprofilePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+	<ion-navbar>
+		<ion-title>editprofile</ion-title>
+	</ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+	<img src="assets/imgs/logo.png" width="110" />
+
+
+	<form   (ngSubmit)="saveProfile()" #registerForm="ngForm" >
+
+		<ion-row padding-bottom>
+			<ion-item >
+
+				<ion-input type="text" placeholder="First Name" name="firstName" [(ngModel)]="userProfile.firstName"  required></ion-input>
+
+				<ion-icon ios="ios-contact" md="md-contact" item-left></ion-icon>
+			</ion-item>
+		</ion-row>
+
+		<ion-row padding-bottom>
+
+			<ion-item >
+
+				<ion-input type="text" placeholder="Last Name" name="lastName" [(ngModel)]="userProfile.lastName"  required></ion-input>
+
+				<ion-icon ios="ios-contact" md="md-contact" item-left></ion-icon>
+			</ion-item>
+
+		</ion-row>
+
+		<ion-row padding-bottom>
+			<ion-item>
+
+				<ion-input type="email" name="email" placeholder=" Email Id" [(ngModel)]="userProfile.emailId" pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$" required></ion-input><ion-icon ios="ios-mail" md="md-mail" item-left></ion-icon>
+
+			</ion-item></ion-row>
+
+			<ion-row padding-bottom>
+				<ion-item>
+
+
+					<ion-input type="password" name="password" placeholder=" Password" [(ngModel)]="userProfile.password" required></ion-input><ion-icon ios="ios-lock" md="md-lock" item-left></ion-icon>
+
+				</ion-item></ion-row>
+				<ion-row padding-bottom>
+					<ion-item>
+
+
+						<ion-input type="password" name="confPassword" placeholder=" Confirm Password" [(ngModel)]="userProfile.confPassword" required> </ion-input>
+						<ion-icon ios="ios-lock" md="ios-lock-outline" item-left></ion-icon>
+					</ion-item></ion-row>
+
+					<ion-row>
+						<ion-col text-center>
+							<button ion-button full round color="secondary" type="submit" [disabled]="!registerForm.form.valid">
+								Save
+							</button>
+						</ion-col>
+					</ion-row>
+
+
+				</form>
+
+			</ion-content>

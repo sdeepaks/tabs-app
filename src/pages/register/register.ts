@@ -63,7 +63,7 @@
 						this.showPopup("Success", "Account created successfully!");
 
 
-						this.navCtrl.push(CreatePinPage,{emailId: this.userRegistrationForm.emailId});
+						this.navCtrl.push(CreatePinPage,{emailId: this.userRegistrationForm.emailId,firstName:this.userRegistrationForm.firstName,lastName:this.userRegistrationForm.lastName});
 
 					}else if(data.status === "error"){
 						this.showPopup("Error", "Email already Registered!");

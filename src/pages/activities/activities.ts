@@ -114,7 +114,7 @@ db.executeSql('SELECT * FROM expense where isDeleted=0 ORDER BY expenseID DESC',
     .then(res => {
       this.expenses = [];
       for(var i=0; i<res.rows.length; i++) {
-        this.expenses.push({expenseID:res.rows.item(i).expenseID,date:res.rows.item(i).date,category:res.rows.item(i).category,amount:res.rows.item(i).amount})
+        this.expenses.push({expenseID:res.rows.item(i).expenseID,date:res.rows.item(i).date,category:res.rows.item(i).category,amount:res.rows.item(i).amount,subCategory:res.rows.item(i).subCategory})
       }
     })
     .catch(e => console.log(e));

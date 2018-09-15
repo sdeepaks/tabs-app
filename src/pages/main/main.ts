@@ -23,6 +23,7 @@ export class MainPage {
     ) {
 
     this. getAllCategories();
+    this.getAllSubCategories();
 
     platform.registerBackButtonAction(function (event) {
       platform.exitApp();
@@ -64,32 +65,61 @@ export class MainPage {
           });
         }
 
-
-        
-          db.executeSql('INSERT INTO subCategories VALUES(null,?,?)',['Oil','Groceries'])
-          .then(res => {
-            console.log("sub-categories inserted" + res);
-          })
-          .catch(e => {
-            console.log(e);
-          });
-
-          db.executeSql('INSERT INTO subCategories VALUES(null,?,?)',['KFC','Food'])
-          .then(res => {
-            console.log("sub-categories inserted" + res);
-          })
-          .catch(e => {
-            console.log(e);
-          });
-
-
-
-
       }).catch(e => {
         console.log("error in INSERT category"+JSON.stringify(e));
       });
 
     });
+
+  }
+
+
+
+  getAllSubCategories()
+
+  {
+
+    this.auth.getAllSubCategories().subscribe(data => {
+
+
+      this.sqlite.create({
+        name: 'tabs.db',
+        location: 'default'
+      }).then((db: SQLiteObject) => {
+
+const myObj = data;
+
+const myObjStr = JSON.stringify(myObj);
+
+
+        console.log("All Sub Categories -->" + myObjStr); 
+
+        for (let tempData of myObj) {
+          console.log("TempData -->"+tempData.category);   
+          for (let sub_cat of tempData.subcategory)
+          {
+             console.log(sub_cat);
+
+             db.executeSql('INSERT INTO subCategories VALUES(?,?)',[sub_cat,tempData.category])
+          .then(res => {
+            console.log("subCategories inserted " + sub_cat);
+          })
+          .catch(e => {
+            console.log(e);
+          });
+           
+          }
+
+        }
+      
+
+
+
+        }).catch(e => {
+          console.log("error in INSERT category"+JSON.stringify(e));
+        });
+
+      });
 
   }
 

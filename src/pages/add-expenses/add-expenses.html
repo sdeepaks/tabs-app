@@ -36,7 +36,7 @@
 <ion-row padding-bottom>
 <ion-item>
   <ion-label>Sub-Category</ion-label>
-  <ion-select [(ngModel)]="expenseForm.subCategories" name="subCategories" required>
+  <ion-select [(ngModel)]="expenseForm.subCategories" name="subCategory"  [(ngModel)]="expenseForm.subCategory"required>
     
     <ion-option *ngFor="let subCategory of subCategories;" [value] = "subCategory.subCategory" >{{subCategory.subCategory}}
     </ion-option>

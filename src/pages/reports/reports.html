@@ -6,50 +6,55 @@
 -->
 <ion-header>
 
-   <ion-navbar>
-<ion-buttons side="item-left">
+	<ion-navbar>
+		<ion-buttons side="item-left">
 
-  <button ion-button icon-only menuToggle>
-    <ion-icon name="menu"></ion-icon>
+			<button ion-button icon-only menuToggle>
+				<ion-icon name="menu"></ion-icon>
 
-  </button></ion-buttons>
+			</button></ion-buttons>
 
-     <ion-title item-left></ion-title>
-  </ion-navbar>
-
-
-</ion-header>
+			<ion-title item-left></ion-title>
+		</ion-navbar>
 
 
-<ion-content padding>
+	</ion-header>
 
-<ion-grid>
-  <ion-row>
-    <ion-col>
-     Category
-    </ion-col>
-    <ion-col>
-      Date
-    </ion-col>
-    <ion-col>
-      Total Amount
-    </ion-col>
-  </ion-row>
+	<ion-content padding>
+
+		<ion-list>
+			<ion-item>
+
+					<ion-row class="rows" >
+						<ion-col>
+							<b>Category</b>
+						</ion-col>
+					
+						<ion-col>
+							<b>Total Expense</b>
+						</ion-col>
+					</ion-row>
+
+				</ion-item>
+
+			<ion-item-sliding *ngFor="let data of reportData;" >
+				<ion-item>
+
+					<ion-row class="rows"  >
+						<ion-col>
+							{{data.category}} 
+						</ion-col>
+
+						<ion-col>
+							{{data.totalAmout}} 
+						</ion-col>
+					</ion-row>
+
+				</ion-item>
+
+			</ion-item-sliding>
+		</ion-list>
 
 
- <ion-row *ngFor="let data of reportData;">
-    <ion-col>
-     {{data.category}} 
-    </ion-col>
-    <ion-col>
-      Date
-    </ion-col>
-    <ion-col>
-      {{data.totalAmout}} 
-    </ion-col>
-  </ion-row>
 
-</ion-grid>
-
-
-</ion-content>
+	</ion-content>

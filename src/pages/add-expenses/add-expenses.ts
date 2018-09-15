@@ -12,7 +12,7 @@ import { ActivitiesPage } from '../activities/activities';
 })
 export class AddExpensesPage {
 
-	expenseForm={category:"", billNo : "" , amount :"", date : ""}
+	expenseForm={category:"", billNo : "" , amount :"", date : "",subCategory :""}
 	createSuccess=true;
 	categories: any= [];
 	subCategories: any= [];
@@ -90,11 +90,15 @@ db.executeSql('SELECT subCategory FROM subCategories where category=?', [categor
 			name: 'tabs.db',
 			location: 'default'
 		}).then((db: SQLiteObject) => {
-			db.executeSql('INSERT INTO expense VALUES(null,?,?,?,?,0,0)',[this.expenseForm.billNo,this.expenseForm.date,this.expenseForm.category ,this.expenseForm.amount])
+			db.executeSql('INSERT INTO expense VALUES(null,?,?,?,?,0,0,?)',[this.expenseForm.billNo,this.expenseForm.date,this.expenseForm.category ,this.expenseForm.amount,this.expenseForm.subCategory])
 
 			.then(res => {
+
 				console.log("TABS Called" + res);
 				this.showPopup("Success", "Data saved");
+
+				this.expenseForm={category:"", billNo : "" , amount :"", date : "",subCategory :""}
+	
 				this.navCtrl.parent.select(1); 
 
 			})

@@ -41,6 +41,23 @@ var category_url = "http://semicolonites.website/tabs/api/categories_all";
 
 	  	}
 
+	getAllSubCategories(){
+
+var subCategory_url = "http://semicolonites.website/tabs/api/get_all_sub_categories";
+
+
+	return this.http.get(subCategory_url)
+	.do( (res:Response) => console.log(res))
+	.map( (res:Response) => res.json())
+	.catch(error => {
+
+		console.log("exception handler");
+		return JSON.parse('[{"status":"systemError"}]');
+	});
+
+	  	}
+
+
 	  	storeLocally(data)
 	  	{
 	  		this.storage.clear();
@@ -164,7 +181,7 @@ createDB()
     }).then((db: SQLiteObject) => {
 
 
-      db.executeSql('CREATE TABLE IF NOT EXISTS expense(expenseID INTEGER PRIMARY KEY AUTOINCREMENT ,billNo TEXT, date TEXT, category TEXT, amount INT,isSynced INT, isDeleted INT)',[])
+      db.executeSql('CREATE TABLE IF NOT EXISTS expense(expenseID INTEGER PRIMARY KEY AUTOINCREMENT ,billNo TEXT, date TEXT, category TEXT, amount INT,isSynced INT, isDeleted INT,subCategory TEXT)',[])
       .then(res => console.log('TABS:info:expense table created'))
       .catch(e => console.log("TABS:Error:while creating expense table" + e));  
 
@@ -174,11 +191,11 @@ createDB()
       .then(res => console.log('TABS:info:categories table created'))
       .catch(e => console.log("TABS:Error:in creating categories table" + e));  
 
-      db.executeSql('CREATE TABLE IF NOT EXISTS subCategories(subCategoriesID INTEGER PRIMARY KEY AUTOINCREMENT ,subCategory TEXT,category TEXT)',[])
+      db.executeSql('CREATE TABLE IF NOT EXISTS subCategories(subCategory TEXT PRIMARY KEY,category TEXT)',[])
       .then(res => console.log('TABS:info:sub-categories table created'))
       .catch(e => console.log("TABS:Error:in creating sub-categories table" + e));  
 
-      db.executeSql('CREATE TABLE IF NOT EXISTS userInfo(userID INTEGER PRIMARY KEY AUTOINCREMENT ,email TEXT, pin TEXT)',[])
+      db.executeSql('CREATE TABLE IF NOT EXISTS userInfo(userID INTEGER PRIMARY KEY AUTOINCREMENT ,email TEXT, pin TEXT,firstName TEXT, lastName TEXT)',[])
       .then(res => console.log('TABS:info:userInfo table created'))
       .catch(e => console.log("TABS:Error:in userInfo categories table" + e));  
 
@@ -201,15 +218,13 @@ logout()
       location: 'default'
     }).then((db: SQLiteObject) => {
 
-db.executeSql('DELETE TABLE IF EXISTS categories',[])
-      .then(res => console.log('TABS:info:categories table deleted'))
-      .catch(e => console.log("TABS:Error:in deleting categories table" + e));  
+ 
 
-       db.executeSql('DELETE TABLE IF EXISTS userInfo',[])
+       db.executeSql('DROP TABLE IF EXISTS userInfo',[])
       .then(res => console.log('TABS:info:userInfo table deleted'))
       .catch(e => console.log("TABS:Error:in deletion of userInfo  table" + e));  
 
-      db.executeSql('DELETE TABLE IF EXISTS expense',[])
+      db.executeSql('DROP TABLE IF EXISTS expense',[])
       .then(res => console.log('TABS:info:expense table deleted'))
       .catch(e => console.log("TABS:Error:while deleting expense table" + e));  
 
@@ -232,7 +247,7 @@ db.executeSql('DELETE TABLE IF EXISTS categories',[])
 
   
 
- storeUserInfo(email,pin)
+ storeUserInfo(email,pin,firstName,lastName)
    {
 
 
@@ -242,7 +257,7 @@ console.log("email"+ email+ "pin" +pin);
       name: 'tabs.db',
       location: 'default'
     }).then((db: SQLiteObject) => {
-      db.executeSql('INSERT INTO userInfo VALUES(1,?,?)',[email,pin])
+      db.executeSql('INSERT INTO userInfo VALUES(1,?,?,?,?)',[email,pin,firstName,lastName])
 
       .then(res => {
         console.log("DataSaved userInfo" + res);

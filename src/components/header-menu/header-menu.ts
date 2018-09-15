@@ -1,14 +1,9 @@
-import { Component } from '@angular/core';
+import { Component,ViewChild } from '@angular/core';
 import { App, Nav, MenuController,NavController } from 'ionic-angular';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
-//import { LoginPage } from '../../pages/login/login';
+import { LoginPage } from '../../pages/login/login';
+import { EditprofilePage } from '../../pages/editprofile/editprofile';
 
-/**
- * Generated class for the HeaderMenuComponent component.
- *
- * See https://angular.io/api/core/Component for more info on Angular
- * Components.
- */
  @Component({
  	selector: 'header-menu',
  	templateUrl: 'header-menu.html'
@@ -22,8 +17,9 @@ import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
  		//public navCtrl: NavController
  		) {
 
- 		console.log('Hello HeaderMenuComponent Component');
- 	}
+ 		 	}
+
+@ViewChild(NavController) nav: NavController;
 
  	logoutClicked() {
  		console.log("Logout");
@@ -31,8 +27,15 @@ import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
  		this.menuCtrl.close();
 
  		this.auth.logout();
+ 		var nav = this.app.getRootNav();
+    	nav.setRoot(LoginPage);
+		
 
-// 		this.navCtrl.push(LoginPage);
+ 	}
 
+ 	openProfile()
+ 	{
+ 		var nav = this.app.getRootNav();
+    	nav.setRoot(EditprofilePage);
  	}
  }

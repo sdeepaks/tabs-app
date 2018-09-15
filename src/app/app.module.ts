@@ -13,6 +13,8 @@ import { RegisterPage } from '../pages/register/register';
 import { CreatePinPage } from '../pages/create-pin/create-pin';
 import { ValidatePinPage } from '../pages/validate-pin/validate-pin';
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
+import { EditprofilePage } from '../pages/editprofile/editprofile';
+
 import { HttpModule } from '@angular/http';
 import { SQLite } from '@ionic-native/sqlite';
 import { Toast } from '@ionic-native/toast';
@@ -27,7 +29,8 @@ import { HeaderMenuComponent } from '../components/header-menu/header-menu';
     CreatePinPage,
     ValidatePinPage,
     EditdataPage,
-    HeaderMenuComponent
+    HeaderMenuComponent,
+    EditprofilePage
   ],
   imports: [
     BrowserModule,
