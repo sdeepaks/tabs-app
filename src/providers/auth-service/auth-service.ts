@@ -195,7 +195,7 @@ createDB()
       .then(res => console.log('TABS:info:sub-categories table created'))
       .catch(e => console.log("TABS:Error:in creating sub-categories table" + e));  
 
-      db.executeSql('CREATE TABLE IF NOT EXISTS userInfo(userID INTEGER PRIMARY KEY AUTOINCREMENT ,email TEXT, pin TEXT,firstName TEXT, lastName TEXT)',[])
+      db.executeSql('CREATE TABLE IF NOT EXISTS userInfo(userID INTEGER PRIMARY KEY AUTOINCREMENT ,email TEXT, pin TEXT,firstName TEXT, lastName TEXT,password TEXT)',[])
       .then(res => console.log('TABS:info:userInfo table created'))
       .catch(e => console.log("TABS:Error:in userInfo categories table" + e));  
 
@@ -257,7 +257,7 @@ console.log("email"+ email+ "pin" +pin);
       name: 'tabs.db',
       location: 'default'
     }).then((db: SQLiteObject) => {
-      db.executeSql('INSERT INTO userInfo VALUES(1,?,?,?,?,)',[email,pin,firstName,lastName,password])
+      db.executeSql('INSERT INTO userInfo VALUES(1,?,?,?,?,?)',[email,pin,firstName,lastName,password])
 
       .then(res => {
         console.log("DataSaved userInfo" + res);
