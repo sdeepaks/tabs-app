@@ -19,6 +19,7 @@
 	  	static readonly GENERATE_PIN_URL = 'http://semicolonites.website/tabs/api/user_pin';
 
 	  	static readonly REGISTER_URL = 'http://semicolonites.website/tabs/api/user';
+	  	static readonly UPDATE_USER_URL = 'http://semicolonites.website/tabs/api/edit_user';
 	  	access: boolean;
 	  	token: string;
 	  userPIN=0;
@@ -275,6 +276,57 @@ console.log("email"+ email+ "pin" +pin);
     });
 
    }
+
+
+   updateUserInfo(email,firstName,lastName,password)
+   {
+
+
+
+console.log("IN update --> email"+ email);
+     this.sqlite.create({
+      name: 'tabs.db',
+      location: 'default'
+    }).then((db: SQLiteObject) => {
+      db.executeSql('UPDATE userInfo set firstName=?, lastName=?, password=? where email=?',[firstName,lastName,password,email])
+
+      .then(res => {
+        console.log("DataUpdated userInfo" + res);
+        
+
+      })
+      .catch(e => {
+        console.log("Error in updateUserInfo"+ JSON.stringify(e));
+        
+      });
+
+    }).catch(e => {
+      console.log("error in UPDATE"+JSON.stringify(e));
+
+    });
+
+
+
+let body = new FormData();
+		body.append('FirstName', firstName);
+		body.append('LastName', lastName);
+		body.append('password', password);
+		body.append('emailId', email);
+
+ 
+
+		return this.http.post(AuthServiceProvider.UPDATE_USER_URL, body)
+		.do( (res:Response) => console.log(res))
+		.map( (res:Response) => res.json())
+		.catch(error => {
+
+			console.log("exception handler");
+			return JSON.parse('[{"status":"systemError"}]');
+		});
+
+   }
+
+
 
 
 	}
