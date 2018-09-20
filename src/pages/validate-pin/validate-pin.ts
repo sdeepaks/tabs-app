@@ -44,7 +44,7 @@ platform.registerBackButtonAction(function (event) {
 
 if(this.userPIN === this.validatePINForm.pin)
         {
-          console.log('PIN validated!!');
+          console.log('PIN validated!!' +this.email);
          this.navCtrl.push(MainPage);
        }
        else

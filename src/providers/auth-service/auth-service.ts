@@ -6,6 +6,7 @@
 	import 'rxjs/add/operator/catch';
 	import 'rxjs/add/operator/map';
 	import { Storage } from '@ionic/storage';
+	import { Events  } from 'ionic-angular';
 	/*
 	  Generated class for the AuthServiceProvider provider.
 
@@ -20,41 +21,51 @@
 
 	  	static readonly REGISTER_URL = 'http://semicolonites.website/tabs/api/user';
 	  	static readonly UPDATE_USER_URL = 'http://semicolonites.website/tabs/api/edit_user';
+	  	static readonly ADD_EXPENSE_URL= "http://semicolonites.website/tabs/api/add_expenses"
 	  	access: boolean;
 	  	token: string;
-	  userPIN=0;
+	  	userPIN=0;
 
-	  	constructor(public http: Http, private storage: Storage,private sqlite: SQLite) {}
+	  	constructor(public http: Http, private storage: Storage,private sqlite: SQLite,public events: Events) {
 
-	  	getAllCategories(){
+	  		events.subscribe('syncExpense', (expenseID) => {
+	  			
+	  			console.log('NonSync Data found --> ', expenseID);
 
-var category_url = "http://semicolonites.website/tabs/api/categories_all";
-
-
-	return this.http.get(category_url)
-	.do( (res:Response) => console.log(res))
-	.map( (res:Response) => res.json())
-	.catch(error => {
-
-		console.log("exception handler");
-		return JSON.parse('[{"status":"systemError"}]');
-	});
+	  			this.uploadExpense();
+	  		});
 
 	  	}
 
-	getAllSubCategories(){
+	  	getAllCategories(){
 
-var subCategory_url = "http://semicolonites.website/tabs/api/get_all_sub_categories";
+	  		var category_url = "http://semicolonites.website/tabs/api/categories_all";
 
 
-	return this.http.get(subCategory_url)
-	.do( (res:Response) => console.log(res))
-	.map( (res:Response) => res.json())
-	.catch(error => {
+	  		return this.http.get(category_url)
+	  		.do( (res:Response) => console.log(res))
+	  		.map( (res:Response) => res.json())
+	  		.catch(error => {
 
-		console.log("exception handler");
-		return JSON.parse('[{"status":"systemError"}]');
-	});
+	  			console.log("exception handler");
+	  			return JSON.parse('[{"status":"systemError"}]');
+	  		});
+
+	  	}
+
+	  	getAllSubCategories(){
+
+	  		var subCategory_url = "http://semicolonites.website/tabs/api/get_all_sub_categories";
+
+
+	  		return this.http.get(subCategory_url)
+	  		.do( (res:Response) => console.log(res))
+	  		.map( (res:Response) => res.json())
+	  		.catch(error => {
+
+	  			console.log("exception handler");
+	  			return JSON.parse('[{"status":"systemError"}]');
+	  		});
 
 	  	}
 
@@ -105,7 +116,7 @@ var subCategory_url = "http://semicolonites.website/tabs/api/get_all_sub_categor
 		body.append('password', userRegistrationForm.password);
 		body.append('emailId', userRegistrationForm.emailId);
 
- 
+		
 
 		return this.http.post(AuthServiceProvider.REGISTER_URL, body)
 		.do( (res:Response) => console.log(res))
@@ -116,13 +127,13 @@ var subCategory_url = "http://semicolonites.website/tabs/api/get_all_sub_categor
 			return JSON.parse('[{"status":"systemError"}]');
 		});
 
- 
+		
 
 	}
 
 	public  generatePIN(createPINForm,emailId)  { 
 
- 
+		
 	/*var headers = new Headers();
 	headers.append('Access-Control-Allow-Headers', '*');*/
 
@@ -149,7 +160,7 @@ var subCategory_url = "http://semicolonites.website/tabs/api/get_all_sub_categor
 
 public  doLogin(loginForm)  { 
 
-  var login_url = "http://semicolonites.website/tabs/api/user_authenticate?uname="+loginForm.email+"&password=" +loginForm.password;
+	var login_url = "http://semicolonites.website/tabs/api/user_authenticate?uname="+loginForm.email+"&password=" +loginForm.password;
 
 
 	return this.http.get(login_url)
@@ -171,162 +182,202 @@ public  doLogin(loginForm)  {
 	  	return this.token;
 	  }
 
-	
+	  
 
 
-createDB()
-  {
-    this.sqlite.create({
-      name: 'tabs.db',
-      location: 'default'
-    }).then((db: SQLiteObject) => {
+	  createDB()
+	  {
+	  	this.sqlite.create({
+	  		name: 'tabs.db',
+	  		location: 'default'
+	  	}).then((db: SQLiteObject) => {
 
 
-      db.executeSql('CREATE TABLE IF NOT EXISTS expense(expenseID INTEGER PRIMARY KEY AUTOINCREMENT ,billNo TEXT, date TEXT, category TEXT, amount INT,isSynced INT, isDeleted INT,subCategory TEXT)',[])
-      .then(res => console.log('TABS:info:expense table created'))
-      .catch(e => console.log("TABS:Error:while creating expense table" + e));  
+	  		db.executeSql('CREATE TABLE IF NOT EXISTS expense(expenseID INTEGER PRIMARY KEY AUTOINCREMENT ,billNo TEXT, date TEXT, category TEXT, amount INT,isSynced INT, isDeleted INT,subCategory TEXT)',[])
+	  		.then(res => console.log('TABS:info:expense table created'))
+	  		.catch(e => console.log("TABS:Error:while creating expense table" + e));  
 
-      
+	  		
 
-      db.executeSql('CREATE TABLE IF NOT EXISTS categories(categoryID INTEGER PRIMARY KEY AUTOINCREMENT ,category TEXT)',[])
-      .then(res => console.log('TABS:info:categories table created'))
-      .catch(e => console.log("TABS:Error:in creating categories table" + e));  
+	  		db.executeSql('CREATE TABLE IF NOT EXISTS categories(categoryID INTEGER PRIMARY KEY AUTOINCREMENT ,category TEXT)',[])
+	  		.then(res => console.log('TABS:info:categories table created'))
+	  		.catch(e => console.log("TABS:Error:in creating categories table" + e));  
 
-      db.executeSql('CREATE TABLE IF NOT EXISTS subCategories(subCategory TEXT PRIMARY KEY,category TEXT)',[])
-      .then(res => console.log('TABS:info:sub-categories table created'))
-      .catch(e => console.log("TABS:Error:in creating sub-categories table" + e));  
+	  		db.executeSql('CREATE TABLE IF NOT EXISTS subCategories(subCategory TEXT PRIMARY KEY,category TEXT)',[])
+	  		.then(res => console.log('TABS:info:sub-categories table created'))
+	  		.catch(e => console.log("TABS:Error:in creating sub-categories table" + e));  
 
-      db.executeSql('CREATE TABLE IF NOT EXISTS userInfo(userID INTEGER PRIMARY KEY AUTOINCREMENT ,email TEXT, pin TEXT,firstName TEXT, lastName TEXT,password TEXT)',[])
-      .then(res => console.log('TABS:info:userInfo table created'))
-      .catch(e => console.log("TABS:Error:in userInfo categories table" + e));  
+	  		db.executeSql('CREATE TABLE IF NOT EXISTS userInfo(userID INTEGER PRIMARY KEY AUTOINCREMENT ,email TEXT, pin TEXT,firstName TEXT, lastName TEXT,password TEXT)',[])
+	  		.then(res => console.log('TABS:info:userInfo table created'))
+	  		.catch(e => console.log("TABS:Error:in userInfo categories table" + e));  
 
-      
+	  		
 
-    }
-
-
-    ).catch(e => console.log(e));
-  }
-
-logout()
-{
-
-	
+	  	}
 
 
-	this.sqlite.create({
-      name: 'tabs.db',
-      location: 'default'
-    }).then((db: SQLiteObject) => {
+	  	).catch(e => console.log(e));
+	  }
 
- 
+	  logout()
+	  {
 
-       db.executeSql('DROP TABLE IF EXISTS userInfo',[])
-      .then(res => console.log('TABS:info:userInfo table deleted'))
-      .catch(e => console.log("TABS:Error:in deletion of userInfo  table" + e));  
-
-      db.executeSql('DROP TABLE IF EXISTS expense',[])
-      .then(res => console.log('TABS:info:expense table deleted'))
-      .catch(e => console.log("TABS:Error:while deleting expense table" + e));  
+	  	
 
 
- 
+	  	this.sqlite.create({
+	  		name: 'tabs.db',
+	  		location: 'default'
+	  	}).then((db: SQLiteObject) => {
+
+	  		
+
+	  		db.executeSql('DROP TABLE IF EXISTS userInfo',[])
+	  		.then(res => console.log('TABS:info:userInfo table deleted'))
+	  		.catch(e => console.log("TABS:Error:in deletion of userInfo  table" + e));  
+
+	  		db.executeSql('DROP TABLE IF EXISTS expense',[])
+	  		.then(res => console.log('TABS:info:expense table deleted'))
+	  		.catch(e => console.log("TABS:Error:while deleting expense table" + e));  
 
 
-    }
+	  		
 
 
-    ).catch(e => console.log(e));
+	  	}
 
 
-    
-  }
+	  	).catch(e => console.log(e));
 
 
-
-
-
-  
-
- storeUserInfo(email,pin,firstName,lastName,password)
-   {
+	  	
+	  }
 
 
 
-console.log("email"+ email+ "pin" +pin);
-     this.sqlite.create({
-      name: 'tabs.db',
-      location: 'default'
-    }).then((db: SQLiteObject) => {
-      db.executeSql('INSERT INTO userInfo VALUES(1,?,?,?,?,?)',[email,pin,firstName,lastName,password])
-
-      .then(res => {
-        console.log("DataSaved userInfo" + res);
-        
-
-      })
-      .catch(e => {
-        console.log("Error in StoreUserInfo"+ JSON.stringify(e));
-        
-      });
-
-    }).catch(e => {
-      console.log("error in INSERT"+JSON.stringify(e));
-
-    });
-
-   }
 
 
-   updateUserInfo(email,firstName,lastName,password)
-   {
+	  
+
+	  storeUserInfo(email,pin,firstName,lastName,password)
+	  {
 
 
 
-console.log("IN update --> email"+ email);
-     this.sqlite.create({
-      name: 'tabs.db',
-      location: 'default'
-    }).then((db: SQLiteObject) => {
-      db.executeSql('UPDATE userInfo set firstName=?, lastName=?, password=? where email=?',[firstName,lastName,password,email])
+	  	console.log("email"+ email+ "pin" +pin);
+	  	this.sqlite.create({
+	  		name: 'tabs.db',
+	  		location: 'default'
+	  	}).then((db: SQLiteObject) => {
+	  		db.executeSql('INSERT INTO userInfo VALUES(1,?,?,?,?,?)',[email,pin,firstName,lastName,password])
 
-      .then(res => {
-        console.log("DataUpdated userInfo" + res);
-        
+	  		.then(res => {
+	  			console.log("DataSaved userInfo" + res);
+	  			
 
-      })
-      .catch(e => {
-        console.log("Error in updateUserInfo"+ JSON.stringify(e));
-        
-      });
+	  		})
+	  		.catch(e => {
+	  			console.log("Error in StoreUserInfo"+ JSON.stringify(e));
+	  			
+	  		});
 
-    }).catch(e => {
-      console.log("error in UPDATE"+JSON.stringify(e));
+	  	}).catch(e => {
+	  		console.log("error in INSERT"+JSON.stringify(e));
 
-    });
+	  	});
+
+	  }
 
 
-
-let body = new FormData();
-		body.append('FirstName', firstName);
-		body.append('LastName', lastName);
-		body.append('password', password);
-		body.append('emailId', email);
-
- 
-
-		return this.http.post(AuthServiceProvider.UPDATE_USER_URL, body)
-		.do( (res:Response) => console.log(res))
-		.map( (res:Response) => res.json())
-		.catch(error => {
-
-			console.log("exception handler");
-			return JSON.parse('[{"status":"systemError"}]');
-		});
-
-   }
+	  updateUserInfo(email,firstName,lastName,password)
+	  {
 
 
 
+	  	console.log("IN update --> email"+ email);
+	  	this.sqlite.create({
+	  		name: 'tabs.db',
+	  		location: 'default'
+	  	}).then((db: SQLiteObject) => {
+	  		db.executeSql('UPDATE userInfo set firstName=?, lastName=?, password=? where email=?',[firstName,lastName,password,email])
+
+	  		.then(res => {
+	  			console.log("DataUpdated userInfo" + res);
+	  			
+
+	  		})
+	  		.catch(e => {
+	  			console.log("Error in updateUserInfo"+ JSON.stringify(e));
+	  			
+	  		});
+
+	  	}).catch(e => {
+	  		console.log("error in UPDATE"+JSON.stringify(e));
+
+	  	});
+
+
+
+	  	let body = new FormData();
+	  	body.append('FirstName', firstName);
+	  	body.append('LastName', lastName);
+	  	body.append('password', password);
+	  	body.append('emailId', email);
+
+	  	
+
+	  	return this.http.post(AuthServiceProvider.UPDATE_USER_URL, body)
+	  	.do( (res:Response) => console.log(res))
+	  	.map( (res:Response) => res.json())
+	  	.catch(error => {
+
+	  		console.log("exception handler");
+	  		return JSON.parse('[{"status":"systemError"}]');
+	  	});
+
+	  }
+
+
+	  uploadExpense()
+	  {
+	  	
+	  	this.sqlite.create({
+	  		name: 'tabs.db',
+	  		location: 'default'
+	  	}).then((db: SQLiteObject) => {
+
+	  		db.executeSql('SELECT * FROM expense where isSynced =0 ORDER BY expenseID DESC', [])
+	  		.then(res => {
+	  			
+	  			for(var i=0; i<res.rows.length; i++) {
+
+	  				
+	  				console.log("Inside Upload Expense -->" + res.rows.item(i).billNo );
+	  				let body = new FormData();
+	  				body.append('BillNo', res.rows.item(i).billNo);
+	  				body.append('Category', res.rows.item(i).category);
+	  				body.append('amount', res.rows.item(i).amount);
+	  				body.append('email', "sdeepaks@rocketmail.com");
+
+	  				console.log( "---->"+JSON.stringify(body));
+
+	  				return this.http.post(AuthServiceProvider.ADD_EXPENSE_URL, body)
+	  				.do( (res:Response) => console.log("Uploaded --> "+res.json()))
+	  				.map( (res:Response) => res.json())
+	  				.catch(error => {
+
+	  					console.log("Upload Sync exception handler");
+	  					return JSON.parse('[{"status":"systemError"}]');
+	  				});
+
+
+	  			}
+
+	  		}).catch(e => console.log(e));
+
+
+	  	}).catch(e => console.log(e))
+
+	  }
 
 	}

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController,Platform } from 'ionic-angular';
+import { IonicPage, NavController,Platform,NavParams } from 'ionic-angular';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 
@@ -17,11 +17,11 @@ export class MainPage {
   reportsRoot = 'ReportsPage'
 
 
-  constructor(public navCtrl: NavController, private sqlite: SQLite,
+  constructor(public navCtrl: NavController, public navParams: NavParams, private sqlite: SQLite,
     private auth: AuthServiceProvider,
     private platform: Platform,
     ) {
-
+   
     this. getAllCategories();
     this.getAllSubCategories();
 
@@ -34,7 +34,8 @@ export class MainPage {
   ionViewDidLoad() {
 
 
-
+ this. getAllCategories();
+    this.getAllSubCategories();
 
   }
 
@@ -42,6 +43,7 @@ export class MainPage {
 
 
   }
+
 
   getAllCategories()
 
