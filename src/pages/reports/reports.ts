@@ -29,20 +29,23 @@ export class ReportsPage {
 
   ionViewDidLoad() {
     console.log('report page loaded');
-    this.createReport('09-09-2018','10-09-2018');
+    
+  }
+  ionViewWillEnter()
+  {
+this.createReport();
   }
 
 
-  createReport(startDate,endDate) {
+  createReport() {
 
-	console.log("createReport called:" + startDate +" EndDate" + endDate);
-
+	
   this.sqlite.create({
     name: 'tabs.db',
     location: 'default'
   }).then((db: SQLiteObject) => {
 
-db.executeSql('SELECT category,SUM(amount) as totalAmount FROM expense GROUP BY category ', [])
+db.executeSql('SELECT category,SUM(amount) as totalAmount FROM expense where isDeleted !=1 GROUP BY category  ', [])
     .then(res => {
       this.reportData = [];
       for(var i=0; i<res.rows.length; i++) {

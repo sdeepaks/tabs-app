@@ -62,7 +62,7 @@ updateExpense()
       name: 'tabs.db',
       location: 'default'
     }).then((db: SQLiteObject) => {
-      db.executeSql('UPDATE expense SET date=?,category=?,billNo=?,amount=? WHERE expenseID=?',[this.editExpenseForm.date,this.editExpenseForm.category,this.editExpenseForm.billNo,this.editExpenseForm.amount,this.editExpenseForm.expenseID])
+      db.executeSql('UPDATE expense SET date=?,category=?,billNo=?,amount=?,isSynced=0,isUpdated=1 WHERE expenseID=?',[this.editExpenseForm.date,this.editExpenseForm.category,this.editExpenseForm.billNo,this.editExpenseForm.amount,this.editExpenseForm.expenseID])
         .then(res => {
           console.log(res);
      		this.showPopup("Success", "Expense updated successfully!");

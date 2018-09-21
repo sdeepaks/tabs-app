@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams ,AlertController,Events  } from 'ionic-angular';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 import { EditdataPage } from '../editdata/editdata';
+import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 
 
 @IonicPage()
@@ -14,26 +15,28 @@ export class ActivitiesPage {
 expenses: any = [];
 createSuccess =true;
 totalAmount =0;
-
+syncCalled =false;
   constructor(public navCtrl: NavController, public navParams: NavParams, private sqlite: SQLite
 ,
  private alertCtrl: AlertController,
- public events: Events
+ public auth: AuthServiceProvider
 
   	) {
   	
+
   }
 
  
   ionViewDidLoad() {
   this.getData();
+
   
 }
 
 ionViewWillEnter() {
   this.getData();
 
-
+  this.syncCalled=false;
 }
 
 editData(expenseID) {
@@ -75,9 +78,10 @@ deleteExpense(expenseID) {
       name: 'tabs.db',
       location: 'default'
     }).then((db: SQLiteObject) => {
-      db.executeSql('UPDATE expense SET isDeleted=1 where expenseID=?',[expenseID])
+      db.executeSql('UPDATE expense SET isDeleted=1,isSynced=0 where expenseID=?',[expenseID])
         .then(res => {
           console.log(res);
+          this.auth.uploadExpense();
          this.showPopup("Success", "Expense deleted successfully!");
        
 
@@ -111,10 +115,10 @@ db.executeSql('SELECT * FROM expense where isDeleted=0 ORDER BY expenseID DESC',
       this.expenses = [];
       for(var i=0; i<res.rows.length; i++) {
 
-          if(res.rows.item(i).isSynced == 0)
+          if(res.rows.item(i).isSynced == 0 && this.syncCalled == false)
           {
-           this.events.publish('syncExpense',  res.rows.item(i).expenseID);
-
+           this.auth.uploadExpense();
+          this.syncCalled=true;
           }
        
         this.expenses.push({expenseID:res.rows.item(i).expenseID,date:res.rows.item(i).date,category:res.rows.item(i).category,amount:res.rows.item(i).amount,subCategory:res.rows.item(i).subCategory})

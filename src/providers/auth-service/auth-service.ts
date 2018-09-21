@@ -21,7 +21,8 @@
 
 	  	static readonly REGISTER_URL = 'http://semicolonites.website/tabs/api/user';
 	  	static readonly UPDATE_USER_URL = 'http://semicolonites.website/tabs/api/edit_user';
-	  	static readonly ADD_EXPENSE_URL= "http://semicolonites.website/tabs/api/add_expenses"
+	  	static readonly ADD_EXPENSE_URL= 'http://semicolonites.website/tabs/api/add_expenses';
+	  	static readonly UPDATE_EXPENSE_URL= 'http://semicolonites.website/tabs/api/update_expeses';
 	  	access: boolean;
 	  	token: string;
 	  	userPIN=0;
@@ -32,7 +33,7 @@
 	  			
 	  			console.log('NonSync Data found --> ', expenseID);
 
-	  			this.uploadExpense();
+	  			
 	  		});
 
 	  	}
@@ -193,7 +194,7 @@ public  doLogin(loginForm)  {
 	  	}).then((db: SQLiteObject) => {
 
 
-	  		db.executeSql('CREATE TABLE IF NOT EXISTS expense(expenseID INTEGER PRIMARY KEY AUTOINCREMENT ,billNo TEXT, date TEXT, category TEXT, amount INT,isSynced INT, isDeleted INT,subCategory TEXT)',[])
+	  		db.executeSql('CREATE TABLE IF NOT EXISTS expense(expenseID INTEGER PRIMARY KEY AUTOINCREMENT ,billNo TEXT, date TEXT, category TEXT, amount INT,isSynced INT, isDeleted INT,isUpdated INT,subCategory TEXT)',[])
 	  		.then(res => console.log('TABS:info:expense table created'))
 	  		.catch(e => console.log("TABS:Error:while creating expense table" + e));  
 
@@ -352,23 +353,65 @@ public  doLogin(loginForm)  {
 	  			for(var i=0; i<res.rows.length; i++) {
 
 	  				
-	  				console.log("Inside Upload Expense -->" + res.rows.item(i).billNo );
+	  				console.log("Inside Upload Expense -->" + res.rows.item(i).billNo +":"+res.rows.item(i).amount );
 	  				let body = new FormData();
 	  				body.append('BillNo', res.rows.item(i).billNo);
 	  				body.append('Category', res.rows.item(i).category);
 	  				body.append('amount', res.rows.item(i).amount);
 	  				body.append('email', "sdeepaks@rocketmail.com");
+	  				body.append('userExpenseId', res.rows.item(i).expenseID);
+	  				body.append('subCategory', res.rows.item(i).subCategory);
 
-	  				console.log( "---->"+JSON.stringify(body));
 
-	  				return this.http.post(AuthServiceProvider.ADD_EXPENSE_URL, body)
-	  				.do( (res:Response) => console.log("Uploaded --> "+res.json()))
-	  				.map( (res:Response) => res.json())
-	  				.catch(error => {
+	  				let expenseID = res.rows.item(i).expenseID;
+	  				if(res.rows.item(i).isDeleted ==1  )
+	  				{
+	  					
+	  					body.append('userID', "404");
+	  					
+	  					this.callUploadExpenseHttp(body,AuthServiceProvider.UPDATE_EXPENSE_URL).subscribe(data => {
 
-	  					console.log("Upload Sync exception handler");
-	  					return JSON.parse('[{"status":"systemError"}]');
-	  				});
+	  						
+
+	  						if(data.status === "success")
+	  						{
+
+	  							
+	  							db.executeSql('DELETE from expense where expenseID =?',[expenseID]);
+	  							console.log("Expense Deleted");
+	  						}
+	  					})
+
+	  				} else if(res.rows.item(i).isUpdated==1)
+	  				{
+	  					
+	  					this.callUploadExpenseHttp(body,AuthServiceProvider.UPDATE_EXPENSE_URL).subscribe(data => {
+
+	  						
+
+	  						if(data.status === "success")
+	  						{
+
+	  							this.updateSyncFlag(expenseID,1,0);
+	  							console.log("Expense Updated");
+	  						}
+	  					})
+	  				}
+	  				else
+	  				{
+	  					
+
+	  					this.callUploadExpenseHttp(body,AuthServiceProvider.ADD_EXPENSE_URL).subscribe(data => {
+	  						console.log("Status-->" +data.status );
+
+	  						if(data.status === "success")
+	  						{
+
+	  							this.updateSyncFlag(expenseID,1,0);
+	  							console.log("Expense Added");
+	  						}
+	  					});
+	  				}
 
 
 	  			}
@@ -377,6 +420,50 @@ public  doLogin(loginForm)  {
 
 
 	  	}).catch(e => console.log(e))
+
+	  }
+
+
+	  callUploadExpenseHttp(body,URL)
+	  {
+	  	return this.http.post(URL, body)
+	  	.do( (resp:Response) => console.log("Uploaded --> "+resp.json()))
+	  	.map((resp: Response) => resp.json())	
+	  	.catch(error => {
+	  		console.log("Upload Sync exception handler");
+	  		return JSON.parse('[{"status":"systemError"}]');
+	  	})
+
+	  }
+
+	 
+
+	  updateSyncFlag(expenseID,isSync,isUpdated)
+	  {
+
+	  	console.log("updateSyncFlag called: "+expenseID);
+
+	  	this.sqlite.create({
+	  		name: 'tabs.db',
+	  		location: 'default'
+	  	}).then((db: SQLiteObject) => {
+	  		db.executeSql('UPDATE expense SET isSynced=?,isUpdated=? where expenseID =?',[isSync,isUpdated,expenseID])
+
+	  		.then(res => {
+	  			console.log("DataSaved userInfo" + res);
+	  			
+
+	  		})
+	  		.catch(e => {
+	  			console.log("Error in StoreUserInfo"+ JSON.stringify(e));
+	  			
+	  		});
+
+	  	}).catch(e => {
+	  		console.log("error in INSERT"+JSON.stringify(e));
+
+	  	});
+
 
 	  }
 

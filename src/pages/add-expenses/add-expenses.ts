@@ -90,7 +90,7 @@ export class AddExpensesPage {
 		}).then((db: SQLiteObject) => {
 
 			
-				db.executeSql('INSERT INTO expense VALUES(null,?,?,?,?,0,0,?)',[this.expenseForm.billNo,this.expenseForm.date,this.expenseForm.category ,this.expenseForm.amount,this.expenseForm.subCategory])
+				db.executeSql('INSERT INTO expense VALUES(null,?,?,?,?,0,0,0,?)',[this.expenseForm.billNo,this.expenseForm.date,this.expenseForm.category ,this.expenseForm.amount,this.expenseForm.subCategory])
 
 				.then(res => {
 
