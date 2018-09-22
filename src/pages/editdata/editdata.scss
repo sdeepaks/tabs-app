@@ -1,5 +1,9 @@
-header-menu {
-
+page-editdata {
+ion-content {
+    background-image: url('../assets/imgs/background.png');
+    backgoround-repeat:no-repeat;
+    background-size: cover;
+}
 ion-item:first-child {
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
@@ -8,6 +12,6 @@ ion-item:first-child {
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
   }
-
   
+
 }

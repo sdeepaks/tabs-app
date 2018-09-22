@@ -90,7 +90,12 @@ if(res.rows.length !=0)
        {
          console.log("Authenticated Successfully");
          loader.dismiss();
+
+      this.auth.insertPreLoadedExpense(this.loginForm.email);
+
          this.navCtrl.push(CreatePinPage,{emailId: this.loginForm.email});
+
+
 
         }else if(data.status === "error"){
          loader.dismiss();

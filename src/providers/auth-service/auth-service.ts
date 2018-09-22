@@ -26,6 +26,7 @@
 	  	access: boolean;
 	  	token: string;
 	  	userPIN=0;
+	  	email ="";
 
 	  	constructor(public http: Http, private storage: Storage,private sqlite: SQLite,public events: Events) {
 
@@ -103,8 +104,56 @@
 	  	}
 
 
-	  // SignUP
-	  public  register(userRegistrationForm)  {
+	  	public downloadExpenses(emailID)
+	  	{
+
+	  		var user_expense_url = "http://semicolonites.website/tabs/api/user_all_expense?email="+emailID;
+	  		console.log("downloadExpenses called!! " +user_expense_url);
+	  		return this.http.get(user_expense_url)
+	  		.do( (res:Response) => console.log(res))
+	  		.map( (res:Response) => res.json())
+	  		.catch(error => {
+
+	  			console.log("exception handler");
+	  			return JSON.parse('[{"status":"systemError"}]');
+	  		});
+	  		
+
+	  	}
+
+	  	insertPreLoadedExpense(emailID)
+
+	  	{
+
+	  		this.downloadExpenses(emailID).subscribe(data => {
+
+	  			console.log("Data fetch from WS-" +data);
+	  			this.sqlite.create({
+	  				name: 'tabs.db',
+	  				location: 'default'
+	  			}).then((db: SQLiteObject) => {
+
+	  				for (var i = 0; i < data.data.length; ++i) {
+	  					let row=data.data[i];
+	  					console.log("row -->"+ row);
+	  					db.executeSql('INSERT INTO expense VALUES(?,?,?,?,?,1,0,0,?)',[row.id,row.billNo,row.lastmodified,row.category ,row.amount,row.subCategory]) .then(res => {
+	  						console.log("categories inserted" + res);
+	  					})
+	  					.catch(e => {
+	  						console.log(e);
+	  					});
+	  				}
+
+	  			}).catch(e => {
+	  				console.log("error in INSERT category"+JSON.stringify(e));
+	  			});
+
+	  		});
+
+	  	}
+
+
+	  	public  register(userRegistrationForm)  {
 
 
 		/*var headers = new Headers();
@@ -339,6 +388,7 @@ public  doLogin(loginForm)  {
 	  }
 
 
+
 	  uploadExpense()
 	  {
 	  	
@@ -347,18 +397,30 @@ public  doLogin(loginForm)  {
 	  		location: 'default'
 	  	}).then((db: SQLiteObject) => {
 
+
+	  		db.executeSql('Select email from userInfo',[])
+	  		.then(res => {
+	  			console.log('TABS:info:userInfo queried : ' + res.rows.item(0).email);
+	  			this.email= res.rows.item(0).email;
+	  		})
+	  		.catch(e => {
+	  			console.log("TABS:Error:in getEmail function" + e);
+	  		});  
+
 	  		db.executeSql('SELECT * FROM expense where isSynced =0 ORDER BY expenseID DESC', [])
 	  		.then(res => {
 	  			
+	  			
+
 	  			for(var i=0; i<res.rows.length; i++) {
 
-	  				
+	  				console.log("GetEmail function --"+this.email);
 	  				console.log("Inside Upload Expense -->" + res.rows.item(i).billNo +":"+res.rows.item(i).amount );
 	  				let body = new FormData();
 	  				body.append('BillNo', res.rows.item(i).billNo);
 	  				body.append('Category', res.rows.item(i).category);
 	  				body.append('amount', res.rows.item(i).amount);
-	  				body.append('email', "sdeepaks@rocketmail.com");
+	  				body.append('email', this.email);
 	  				body.append('userExpenseId', res.rows.item(i).expenseID);
 	  				body.append('subCategory', res.rows.item(i).subCategory);
 
@@ -367,7 +429,7 @@ public  doLogin(loginForm)  {
 	  				if(res.rows.item(i).isDeleted ==1  )
 	  				{
 	  					
-	  					body.append('userID', "404");
+	  					body.append('userID', '404');
 	  					
 	  					this.callUploadExpenseHttp(body,AuthServiceProvider.UPDATE_EXPENSE_URL).subscribe(data => {
 
@@ -436,7 +498,7 @@ public  doLogin(loginForm)  {
 
 	  }
 
-	 
+
 
 	  updateSyncFlag(expenseID,isSync,isUpdated)
 	  {

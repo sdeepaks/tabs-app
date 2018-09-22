@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams ,AlertController,Events  } from 'ionic-angular';
+import { Component} from '@angular/core';
+import { IonicPage, NavController, NavParams ,AlertController } from 'ionic-angular';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 import { EditdataPage } from '../editdata/editdata';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
@@ -16,13 +16,14 @@ expenses: any = [];
 createSuccess =true;
 totalAmount =0;
 syncCalled =false;
+isInternetActive=false;
   constructor(public navCtrl: NavController, public navParams: NavParams, private sqlite: SQLite
 ,
  private alertCtrl: AlertController,
  public auth: AuthServiceProvider
-
   	) {
   	
+
 
   }
 
@@ -126,7 +127,7 @@ db.executeSql('SELECT * FROM expense where isDeleted=0 ORDER BY expenseID DESC',
     })
     .catch(e => console.log(e));
 
-  db.executeSql('SELECT SUM(amount) AS totalExpense FROM expense', [])
+  db.executeSql('SELECT SUM(amount) AS totalExpense FROM expense where isDeleted=0', [])
     .then(res => {
       if(res.rows.length>0) {
         this.totalAmount = parseInt(res.rows.item(0).totalExpense);
